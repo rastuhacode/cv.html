@@ -26,14 +26,14 @@ const tabs = [
 
 <template>
   <div class="flex flex-col h-full overflow-hidden">
-    <div class="flex items-center border-b border-(--ui-border) bg-(--ui-bg-elevated) px-2">
+    <div class="flex items-center border-b border-default bg-elevated px-2">
       <button
         v-for="tab in tabs"
         :key="tab.value"
         class="flex items-center gap-1.5 px-3 py-2 text-sm font-medium transition-colors"
         :class="activeTab === tab.value
-          ? 'text-(--ui-text-highlighted) border-b-2 border-(--ui-primary)'
-          : 'text-(--ui-text-muted) hover:text-(--ui-text)'"
+          ? 'text-highlighted border-b-2 border-primary'
+          : 'text-muted hover:text-default'"
         @click="activeTab = tab.value"
       >
         <UIcon

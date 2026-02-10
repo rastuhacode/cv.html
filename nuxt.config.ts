@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     'nuxt-monaco-editor'
   ],
 
+  // TODO: Enable ssr (need to make some component ClientOnly)
   ssr: false,
 
   devtools: {

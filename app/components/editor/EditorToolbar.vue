@@ -18,13 +18,13 @@ function handleFileChange(event: Event) {
 </script>
 
 <template>
-  <header class="flex items-center justify-between px-4 py-2 border-b border-(--ui-border) bg-(--ui-bg-elevated)">
+  <header class="flex items-center justify-between px-4 py-2 border-b border-default bg-elevated">
     <div class="flex items-center gap-2">
       <UIcon
         name="i-lucide-file-text"
-        class="size-5 text-(--ui-primary)"
+        class="size-5 text-primary"
       />
-      <h1 class="text-base font-semibold text-(--ui-text-highlighted)">
+      <h1 class="text-base font-semibold text-highlighted">
         CV Builder
       </h1>
     </div>

@@ -1,6 +1,12 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+@layer base {
+  html {
+    box-sizing: border-box;
+  }
+}
+
 @theme static {
   --font-sans: 'Public Sans', sans-serif;
 
@@ -15,4 +21,17 @@
   --color-green-800: #016538;
   --color-green-900: #0A5331;
   --color-green-950: #052E16;
+}
+
+@utility size-a4 {
+  height: 297mm;
+  width: 210mm;
+}
+
+@utility w-a4 {
+  width: 210mm;
+}
+
+@utility h-a4 {
+  height: 297mm;
 }

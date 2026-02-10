@@ -8,6 +8,8 @@ export function useCvEditor() {
   const cssContent = useState<string>('cv-css', () => defaultCss)
   const activeTab = useState<'html' | 'css'>('cv-active-tab', () => 'html')
 
+  const isPreviewMarkup = useState<boolean>('cv-is-preview-markup', () => false)
+
   // Load from localStorage on client
   if (import.meta.client) {
     const savedHtml = localStorage.getItem(STORAGE_KEY_HTML)
@@ -38,7 +40,7 @@ export function useCvEditor() {
     const scriptTag = '<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">'
       + '<' + '/script>'
     return `<!DOCTYPE html>
-<html>
+<html class="overflow-hidden min-h-fit">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -117,6 +119,7 @@ ${html}
     cssContent,
     activeTab,
     combinedDocument,
+    isPreviewMarkup,
     exportToPdf,
     saveHtml,
     importHtml,
