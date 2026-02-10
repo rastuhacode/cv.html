@@ -74,7 +74,7 @@ const totalPages = computed(() => {
           :key="i"
         >
           <div
-            class="absolute left-0 size-a4 border border-dashed border-primary text-primary p-1 bg-transparent z-10"
+            class="absolute left-0 size-a4 border border-dashed border-primary text-primary p-1 bg-transparent z-10 pointer-events-none"
             :style="{ top: `${(i - 1) * 297}mm` }"
           >
             <div class="absolute top-1 left-1 flex  gap-2 font-mono">
@@ -82,7 +82,7 @@ const totalPages = computed(() => {
             </div>
           </div>
           <div
-            class="absolute left-0 size-a4 bg-[repeating-linear-gradient(315deg,var(--ui-primary)_0,var(--ui-primary)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] bg-fixed"
+            class="absolute left-0 size-a4 bg-[repeating-linear-gradient(315deg,var(--ui-primary)_0,var(--ui-primary)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] bg-fixed pointer-events-none"
             :style="{ top: `${(i - 1) * 297}mm` }"
           />
         </template>
@@ -90,7 +90,7 @@ const totalPages = computed(() => {
       <iframe
         ref="iframeRef"
         :srcdoc="debouncedDoc"
-        class="bg-white relative"
+        class="bg-default relative"
         :style="{ minHeight: `${fullHeight}px`, height: `${fullHeight}px`, width: '210mm' }"
         sandbox="allow-scripts allow-same-origin"
         title="CV Preview"
