@@ -25,7 +25,7 @@ function handleFileChange(event: Event) {
         class="size-5 text-primary"
       />
       <h1 class="text-base font-semibold text-highlighted">
-        CV Builder
+        CV.html
       </h1>
     </div>
 
@@ -52,23 +52,44 @@ function handleFileChange(event: Event) {
         />
       </UTooltip>
 
-      <UTooltip text="Reset to default template">
-        <UButton
-          icon="i-lucide-rotate-ccw"
-          color="neutral"
-          variant="ghost"
-          size="sm"
-          aria-label="Reset"
-          @click="resetToDefault"
-        />
-      </UTooltip>
+      <UModal title="Reset">
+        <UTooltip
+          text="Reset to default template"
+        >
+          <UButton
+            icon="i-lucide-rotate-ccw"
+            color="neutral"
+            variant="ghost"
+            size="sm"
+            aria-label="Reset"
+          />
+        </UTooltip>
+        <template #body>
+          <secton class="prose text-default">
+            <p>
+              <span>Are you sure you want to reset to default template?</span>
+              <br>
+              <span class="font-bold text-primary">You will lose all your changes.</span>
+            </p>
+            <p>If you want to keep them, you can export your HTML and import it later.</p>
+          </secton>
+        </template>
+        <template #footer="{ close }">
+          <UButton
+            color="primary"
+            @click="() => { close(); return resetToDefault() }"
+          >
+            Reset
+          </UButton>
+        </template>
+      </UModal>
 
       <USeparator
         orientation="vertical"
         class="h-5 mx-1"
       />
 
-      <UTooltip text="Export as PDF (opens print dialog)">
+      <UTooltip text="Export as PDF">
         <UButton
           icon="i-lucide-printer"
           label="Export PDF"
@@ -84,7 +105,9 @@ function handleFileChange(event: Event) {
         class="h-5 mx-1"
       />
 
-      <UColorModeButton size="sm" />
+      <UTooltip text="Toggle Theme">
+        <UColorModeButton size="sm" />
+      </UTooltip>
     </div>
 
     <input

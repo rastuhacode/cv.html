@@ -1,5 +1,8 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
 
 @layer base {
   html {

@@ -40,17 +40,17 @@ export function useCvEditor() {
     const scriptTag = '<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">'
       + '<' + '/script>'
     return `<!DOCTYPE html>
-<html class="overflow-hidden min-h-fit">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  ${scriptTag}
-  <style>${css}</style>
-</head>
-<body>
-${html}
-</body>
-</html>`
+            <html class="overflow-hidden min-h-fit">
+              <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                ${scriptTag}
+                <style>${css}</style>
+              </head>
+              <body>
+                ${html}
+              </body>
+            </html>`
   }
 
   function exportToPdf() {

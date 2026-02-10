@@ -3,16 +3,18 @@ const { isPreviewMarkup } = useCvEditor()
 </script>
 
 <template>
-  <div class="flex items-center justify-between px-4 py-2 border-b border-default bg-elevated">
-    <div class="flex items-center gap-2">
-      <UButton
-        icon="i-lucide-eye"
-        color="neutral"
-        variant="ghost"
-        size="sm"
-        aria-label="Preview Markup"
-        @click="isPreviewMarkup = !isPreviewMarkup"
-      />
+  <LayoutToolbar>
+    <div class="flex items-center justify-end w-full gap-2">
+      <UTooltip text="Toggle Preview Markup">
+        <UButton
+          icon="i-lucide-square-dashed"
+          :color="isPreviewMarkup ? 'primary' : 'neutral'"
+          variant="ghost"
+          size="sm"
+          aria-label="Toggle Preview Markup"
+          @click="isPreviewMarkup = !isPreviewMarkup"
+        />
+      </UTooltip>
     </div>
-  </div>
+  </LayoutToolbar>
 </template>

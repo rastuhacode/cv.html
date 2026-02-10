@@ -26,7 +26,7 @@ const tabs = [
 
 <template>
   <div class="flex flex-col h-full overflow-hidden">
-    <div class="flex items-center border-b border-default bg-elevated px-2">
+    <LayoutToolbar>
       <button
         v-for="tab in tabs"
         :key="tab.value"
@@ -42,9 +42,9 @@ const tabs = [
         />
         {{ tab.label }}
       </button>
-    </div>
+    </LayoutToolbar>
 
-    <div class="flex-1 overflow-hidden">
+    <div class="grow overflow-hidden">
       <MonacoEditor
         v-show="activeTab === 'html'"
         v-model="htmlContent"

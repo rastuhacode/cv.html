@@ -62,10 +62,10 @@ const totalPages = computed(() => {
 </script>
 
 <template>
-  <div class="h-full flex flex-col bg-[#e5e5e5] dark:bg-[#1a1a1a]">
+  <div class="h-full flex flex-col bg-background">
     <EditorPreviewToolbar />
     <div
-      class="overflow-auto relative flex flex-col grow"
+      class="overflow-auto relative flex flex-col grow mx-auto"
     >
       <template v-if="isPreviewMarkup">
         <template
@@ -76,7 +76,10 @@ const totalPages = computed(() => {
             class="absolute left-0 size-a4 border border-dashed border-primary text-primary p-1 bg-transparent z-10"
             :style="{ top: `${(i - 1) * 297}mm` }"
           >
-            <span class="absolute top-1 left-1">A4</span>
+            <div class="absolute top-1 left-1 flex  gap-2 font-mono">
+              <span>A4</span> |
+              <span>Page {{ i }}</span>
+            </div>
           </div>
           <div
             class="absolute left-0 size-a4 bg-[repeating-linear-gradient(315deg,var(--ui-primary)_0,var(--ui-primary)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] bg-fixed"
