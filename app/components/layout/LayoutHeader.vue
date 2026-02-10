@@ -65,14 +65,14 @@ function handleFileChange(event: Event) {
           />
         </UTooltip>
         <template #body>
-          <secton class="prose text-default">
+          <section class="prose text-default">
             <p>
               <span>Are you sure you want to reset to default template?</span>
               <br>
               <span class="font-bold text-primary">You will lose all your changes.</span>
             </p>
             <p>If you want to keep them, you can export your HTML and import it later.</p>
-          </secton>
+          </section>
         </template>
         <template #footer="{ close }">
           <UButton

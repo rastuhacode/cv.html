@@ -22,11 +22,10 @@ let resizeObserver: ResizeObserver | null = null
 
 function measureHeight() {
   const doc = iframeRef.value?.contentDocument
-  if (!doc) return
+  if (!doc?.body) return
+
   const height = doc.body.scrollHeight
-  // if (height > 0) {
   fullHeight.value = height
-  // }
 }
 
 function setupResizeObserver() {
@@ -77,8 +76,7 @@ const totalPages = computed(() => {
             :style="{ top: `${(i - 1) * 297}mm` }"
           >
             <div class="absolute top-1 left-1 flex  gap-2 font-mono">
-              <span>A4</span> |
-              <span>Page {{ i }}</span>
+              <span>A4 | Page {{ i }}</span>
             </div>
           </div>
           <div
