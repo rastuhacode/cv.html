@@ -4,9 +4,10 @@ import { format } from 'prettier/standalone'
 import htmlParser from 'prettier/plugins/html'
 import cssParser from 'prettier/plugins/postcss'
 
-const { htmlContent, cssContent, activeTab } = useCvEditor()
+const { htmlContent, cssContent, activeTab, htmlHeadContent } = useCvEditor()
 const htmlEditorRef = useTemplateRef('htmlEditorRef')
 const cssEditorRef = useTemplateRef('cssEditorRef')
+const headEditorRef = useTemplateRef('headEditorRef')
 const colorMode = useColorMode()
 
 const monacoTheme = computed(() => {
@@ -27,7 +28,8 @@ const editorOptions = {
 
 const tabs = [
   { label: 'HTML', icon: 'i-lucide-code', value: 'html' as const },
-  { label: 'CSS', icon: 'i-lucide-palette', value: 'css' as const }
+  { label: 'CSS', icon: 'i-lucide-palette', value: 'css' as const },
+  { label: 'HEAD', icon: 'i-lucide-code-xml', value: 'head' as const }
 ]
 
 function handleHtmlLoad() {
@@ -59,6 +61,24 @@ function handleCssLoad() {
     }
   })
 }
+
+function handleHeadLoad() {
+  headEditorRef.value?.$editor?.addAction({
+    id: 'format-head',
+    label: 'Format HEAD',
+    keybindings: [KeyMod.CtrlCmd | KeyCode.KeyS],
+    run: async () => {
+      const formatted = await format(htmlHeadContent.value, {
+        parser: 'html',
+        plugins: [htmlParser]
+      })
+      htmlHeadContent.value = formatted
+    }
+  })
+}
+// TODO: Add tailwindcss prettier plugin and intellisense
+// https://github.com/remcohaszing/monaco-tailwindcss/blob/main/examples/vite-example/index.js
+// TODO: Also add tailwindcss/typography to give access to 'prose' class
 </script>
 
 <template>
@@ -99,6 +119,15 @@ function handleCssLoad() {
         :options="{ ...editorOptions, theme: monacoTheme }"
         class="h-full"
         @load="handleCssLoad"
+      />
+      <MonacoEditor
+        v-show="activeTab === 'head'"
+        ref="headEditorRef"
+        v-model="htmlHeadContent"
+        lang="html"
+        :options="{ ...editorOptions, theme: monacoTheme }"
+        class="h-full"
+        @load="handleHeadLoad"
       />
     </div>
   </div>

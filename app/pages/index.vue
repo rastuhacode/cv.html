@@ -57,7 +57,7 @@ const mobileView = ref<'editor' | 'preview'>('editor')
           'w-full': mobileView === 'preview'
         }"
       >
-        <EditorPreviewPanel />
+        <PreviewPanel />
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-export const defaultHtml = `<div class="max-w-[210mm] mx-auto bg-white text-gray-900 font-sans">
+export const defaultHtml = `<div class="max-w-[210mm] mx-auto bg-white text-gray-900">
   <!-- Header -->
   <header class="bg-slate-800 text-white px-10 py-8">
     <h1 class="text-3xl font-bold tracking-tight">Jane Doe</h1>
@@ -14,29 +14,55 @@ export const defaultHtml = `<div class="max-w-[210mm] mx-auto bg-white text-gray
   <div class="px-10 py-8 space-y-7">
     <!-- Summary -->
     <section>
-      <h2 class="text-lg font-semibold text-slate-800 border-b-2 border-slate-300 pb-1 mb-3 uppercase tracking-wide">Summary</h2>
+      <h2
+        class="text-lg font-semibold text-slate-800 border-b-2 border-slate-300 pb-1 mb-3 uppercase tracking-wide"
+      >
+        Summary
+      </h2>
       <p class="text-sm leading-relaxed text-gray-700">
-        Frontend developer with 6+ years of experience building performant, accessible web applications.
-        Skilled in Vue.js, React, TypeScript, and modern CSS. Passionate about clean code, design systems,
-        and creating exceptional user experiences.
+        Frontend developer with 6+ years of experience building performant,
+        accessible web applications. Skilled in Vue.js, React, TypeScript, and
+        modern CSS. Passionate about clean code, design systems, and creating
+        exceptional user experiences.
       </p>
     </section>
 
     <!-- Experience -->
     <section>
-      <h2 class="text-lg font-semibold text-slate-800 border-b-2 border-slate-300 pb-1 mb-3 uppercase tracking-wide">Experience</h2>
+      <h2
+        class="text-lg font-semibold text-slate-800 border-b-2 border-slate-300 pb-1 mb-3 uppercase tracking-wide"
+      >
+        Experience
+      </h2>
 
       <div class="space-y-5">
         <div>
           <div class="flex justify-between items-baseline">
-            <h3 class="font-semibold text-gray-900">Senior Frontend Developer</h3>
-            <span class="text-sm text-gray-500 shrink-0 ml-4">2022 - Present</span>
+            <h3 class="font-semibold text-gray-900">
+              Senior Frontend Developer
+            </h3>
+            <span class="text-sm text-gray-500 shrink-0 ml-4"
+              >2022 - Present</span
+            >
           </div>
-          <p class="text-sm text-gray-600 font-medium">TechCorp Inc. — San Francisco, CA</p>
-          <ul class="mt-2 text-sm text-gray-700 list-disc list-inside space-y-1">
-            <li>Led the migration of a legacy jQuery app to Vue 3 + TypeScript, improving performance by 40%</li>
-            <li>Built a component library used across 5 product teams, reducing UI development time by 60%</li>
-            <li>Mentored 3 junior developers and established frontend coding standards</li>
+          <p class="text-sm text-gray-600 font-medium">
+            TechCorp Inc. — San Francisco, CA
+          </p>
+          <ul
+            class="mt-2 text-sm text-gray-700 list-disc list-inside space-y-1"
+          >
+            <li>
+              Led the migration of a legacy jQuery app to Vue 3 + TypeScript,
+              improving performance by 40%
+            </li>
+            <li>
+              Built a component library used across 5 product teams, reducing UI
+              development time by 60%
+            </li>
+            <li>
+              Mentored 3 junior developers and established frontend coding
+              standards
+            </li>
           </ul>
         </div>
 
@@ -46,10 +72,20 @@ export const defaultHtml = `<div class="max-w-[210mm] mx-auto bg-white text-gray
             <span class="text-sm text-gray-500 shrink-0 ml-4">2019 - 2022</span>
           </div>
           <p class="text-sm text-gray-600 font-medium">StartupXYZ — Remote</p>
-          <ul class="mt-2 text-sm text-gray-700 list-disc list-inside space-y-1">
-            <li>Developed a real-time dashboard with Vue.js and D3.js serving 10K+ daily users</li>
-            <li>Implemented responsive designs achieving 98+ Lighthouse accessibility scores</li>
-            <li>Integrated REST and GraphQL APIs with optimistic UI patterns</li>
+          <ul
+            class="mt-2 text-sm text-gray-700 list-disc list-inside space-y-1"
+          >
+            <li>
+              Developed a real-time dashboard with Vue.js and D3.js serving 10K+
+              daily users
+            </li>
+            <li>
+              Implemented responsive designs achieving 98+ Lighthouse
+              accessibility scores
+            </li>
+            <li>
+              Integrated REST and GraphQL APIs with optimistic UI patterns
+            </li>
           </ul>
         </div>
 
@@ -58,10 +94,20 @@ export const defaultHtml = `<div class="max-w-[210mm] mx-auto bg-white text-gray
             <h3 class="font-semibold text-gray-900">Junior Web Developer</h3>
             <span class="text-sm text-gray-500 shrink-0 ml-4">2018 - 2019</span>
           </div>
-          <p class="text-sm text-gray-600 font-medium">WebAgency Co. — New York, NY</p>
-          <ul class="mt-2 text-sm text-gray-700 list-disc list-inside space-y-1">
-            <li>Built responsive websites for 15+ clients using HTML, CSS, and JavaScript</li>
-            <li>Collaborated with designers to translate Figma mockups into pixel-perfect interfaces</li>
+          <p class="text-sm text-gray-600 font-medium">
+            WebAgency Co. — New York, NY
+          </p>
+          <ul
+            class="mt-2 text-sm text-gray-700 list-disc list-inside space-y-1"
+          >
+            <li>
+              Built responsive websites for 15+ clients using HTML, CSS, and
+              JavaScript
+            </li>
+            <li>
+              Collaborated with designers to translate Figma mockups into
+              pixel-perfect interfaces
+            </li>
           </ul>
         </div>
       </div>
@@ -69,11 +115,17 @@ export const defaultHtml = `<div class="max-w-[210mm] mx-auto bg-white text-gray
 
     <!-- Education -->
     <section>
-      <h2 class="text-lg font-semibold text-slate-800 border-b-2 border-slate-300 pb-1 mb-3 uppercase tracking-wide">Education</h2>
+      <h2
+        class="text-lg font-semibold text-slate-800 border-b-2 border-slate-300 pb-1 mb-3 uppercase tracking-wide"
+      >
+        Education
+      </h2>
       <div class="flex justify-between items-baseline">
         <div>
           <h3 class="font-semibold text-gray-900">B.S. Computer Science</h3>
-          <p class="text-sm text-gray-600">University of California, Berkeley</p>
+          <p class="text-sm text-gray-600">
+            University of California, Berkeley
+          </p>
         </div>
         <span class="text-sm text-gray-500 shrink-0 ml-4">2014 - 2018</span>
       </div>
@@ -81,24 +133,53 @@ export const defaultHtml = `<div class="max-w-[210mm] mx-auto bg-white text-gray
 
     <!-- Skills -->
     <section>
-      <h2 class="text-lg font-semibold text-slate-800 border-b-2 border-slate-300 pb-1 mb-3 uppercase tracking-wide">Skills</h2>
+      <h2
+        class="text-lg font-semibold text-slate-800 border-b-2 border-slate-300 pb-1 mb-3 uppercase tracking-wide"
+      >
+        Skills
+      </h2>
       <div class="flex flex-wrap gap-2">
-        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full">Vue.js</span>
-        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full">React</span>
-        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full">TypeScript</span>
-        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full">Nuxt</span>
-        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full">Next.js</span>
-        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full">Tailwind CSS</span>
-        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full">Node.js</span>
-        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full">GraphQL</span>
-        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full">Git</span>
-        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full">CI/CD</span>
-        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full">Figma</span>
-        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full">Testing (Vitest, Cypress)</span>
+        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full"
+          >Vue.js</span
+        >
+        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full"
+          >React</span
+        >
+        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full"
+          >TypeScript</span
+        >
+        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full"
+          >Nuxt</span
+        >
+        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full"
+          >Next.js</span
+        >
+        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full"
+          >Tailwind CSS</span
+        >
+        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full"
+          >Node.js</span
+        >
+        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full"
+          >GraphQL</span
+        >
+        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full"
+          >Git</span
+        >
+        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full"
+          >CI/CD</span
+        >
+        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full"
+          >Figma</span
+        >
+        <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full"
+          >Testing (Vitest, Cypress)</span
+        >
       </div>
     </section>
   </div>
-</div>`
+</div>
+`
 
 export const defaultCss = `/* Custom styles for your CV */
 /* You can use plain CSS here alongside Tailwind classes in the HTML */
@@ -113,6 +194,8 @@ body {
   padding: 0;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
+  /* We can use our custom fonts! (You should uncomment HEAD links first) */
+  font-family: 'Manrope', 'Nunito', sans-serif;
 }
 
 /* Ensure the CV fits within a single A4 page when printed */
@@ -121,4 +204,18 @@ body {
     width: 210mm;
     min-height: 297mm;
   }
-}`
+}
+`
+
+export const defaultHtmlHead = `
+<!-- Remeber that if you are loading external scripts, the request is being sent on each edit! -->
+<!-- We are working on solution. For now try to add custom at the end of your CV creation. -->
+
+<!-- You can add custom head content here like fonts, meta tags, etc. -->
+<!-- For ex. install 'Manrope' and 'Nunito' fonts from Google Fonts and use them in your CSS -->
+<!-- Uncomment the following lines and add Manrope and Nunito custom fonts. -->
+
+<!-- <link rel="preconnect" href="https://fonts.googleapis.com"> 
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Manrope:wght@200..800&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet"> -->
+`

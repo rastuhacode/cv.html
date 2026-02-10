@@ -3,14 +3,16 @@ const { combinedDocument, isPreviewMarkup } = useCvEditor()
 const iframeRef = useTemplateRef('iframeRef')
 
 // Debounced document to avoid excessive iframe updates
+// TODO: Take a look at VFrame to not load tailwind on each rerender
 const debouncedDoc = ref(combinedDocument.value)
 let debounceTimer: ReturnType<typeof setTimeout> | null = null
 
+const DEBOUNCE_TIME = 1000 // 1 second
 watch(combinedDocument, (val) => {
   if (debounceTimer) clearTimeout(debounceTimer)
   debounceTimer = setTimeout(() => {
     debouncedDoc.value = val
-  }, 300)
+  }, DEBOUNCE_TIME)
 
   requestAnimationFrame(() => {
     measureHeight()
@@ -62,7 +64,7 @@ const totalPages = computed(() => {
 
 <template>
   <div class="h-full flex flex-col bg-background">
-    <EditorPreviewToolbar />
+    <PreviewToolbar />
     <div
       class="overflow-auto relative flex flex-col grow mx-auto"
     >

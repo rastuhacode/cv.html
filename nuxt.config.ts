@@ -9,6 +9,13 @@ export default defineNuxtConfig({
   // TODO: Enable ssr (need to make some component ClientOnly)
   ssr: false,
 
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false
+    }
+  ],
+
   devtools: {
     enabled: true
   },
