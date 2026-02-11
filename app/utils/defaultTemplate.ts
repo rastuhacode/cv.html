@@ -490,6 +490,7 @@ export const defaultHtml = `<article
 
 export const defaultCss = `/* Custom styles for your CV */
 /* You can use plain CSS here alongside Tailwind classes in the HTML */
+/* Tip: A4 is 210mm width x 297mm height */
 
 @page {
   size: A4;
