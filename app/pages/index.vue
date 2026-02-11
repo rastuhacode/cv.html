@@ -1,6 +1,10 @@
 <script setup lang="ts">
+import { breakpointsTailwind } from '@vueuse/core'
+
 // Mobile view toggle: 'editor' | 'preview'
 const mobileView = ref<'editor' | 'preview'>('editor')
+
+const breakpoints = useBreakpoints(breakpointsTailwind)
 </script>
 
 <template>
@@ -44,17 +48,17 @@ const mobileView = ref<'editor' | 'preview'>('editor')
       <div
         class="border-r border-default overflow-hidden transition-all grow"
         :class="{
-          'hidden xl:block': mobileView === 'preview',
-          'w-full': mobileView === 'editor'
+          'hidden xl:block': mobileView === 'preview' && breakpoints.smaller('xl').value,
+          'w-full': mobileView === 'editor' && breakpoints.smaller('xl').value
         }"
       >
         <EditorPanel />
       </div>
       <div
-        class="transition-all min-w-fit"
+        class="transition-all w-fit"
         :class="{
-          'hidden xl:block': mobileView === 'editor',
-          'w-full': mobileView === 'preview'
+          'hidden xl:block': mobileView === 'editor' && breakpoints.smaller('xl').value,
+          'w-full!': mobileView === 'preview' && breakpoints.smaller('xl').value
         }"
       >
         <PreviewPanel />

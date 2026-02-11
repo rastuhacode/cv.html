@@ -63,10 +63,10 @@ const totalPages = computed(() => {
 </script>
 
 <template>
-  <div class="h-full flex flex-col bg-background">
+  <div class="h-full flex flex-col bg-background w-full">
     <PreviewToolbar />
     <div
-      class="overflow-auto relative flex flex-col grow mx-auto"
+      class="overflow-auto relative flex flex-col grow mx-auto max-w-full"
     >
       <template v-if="isPreviewMarkup">
         <template
