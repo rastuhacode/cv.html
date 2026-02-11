@@ -22,6 +22,7 @@ const props = withDefaults(defineProps<{
 const emits = defineEmits<{
   'update:modelValue': [value: string]
   'load': [editor: MonacoCodeEditor]
+  'save': [editor: MonacoCodeEditor]
 }>()
 
 const editorRef = useTemplateRef('editorRef')
@@ -53,6 +54,7 @@ const handleLoad = (editor: MonacoCodeEditor) => {
       const format = props.lang === 'html' ? formatHtml : formatCss
       const formatted = await format(props.modelValue)
       emits('update:modelValue', formatted)
+      emits('save', editor)
     }
   })
   emits('load', editor)
