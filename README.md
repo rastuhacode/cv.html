@@ -1,15 +1,17 @@
 # CV.html
 
-Build professional, fully customizable CVs using HTML and CSS with a live preview and PDF export.
+> Dev-friendly and fully customizable CV editor
+
+Build professional CVs using HTML and CSS with a live preview and PDF export.
 
 ## Features
 
-- **Monaco Code Editor** — Write HTML and CSS with syntax highlighting and formatting
-- **Live Preview** — See your CV update in real-time when you save
-- **Tailwind CSS Support** — Use Tailwind utility classes directly in your HTML
-- **PDF Export** — Export your CV as PDF
-- **Import / Save HTML** — Import an existing `.html` file or save your work as raw HTML
-- **Auto-Save** — Your work is automatically saved to `localStorage`
+- 🛠️ **Monaco Code Editor** — Write HTML and CSS with syntax highlighting and formatting
+- 👀 **Live Preview** — See your CV update in real-time when you save with one to one printing format
+- 💙 **Tailwind CSS Support** — Use Tailwind utility classes directly in your HTML
+- 📰 **PDF Export** — Export your CV as PDF
+- 🔄 **Load / Save HTML** — Import an existing `.html` file or save your work as raw HTML
+- 💾 **Auto-Save** — Your work is automatically saved to `localStorage`
 
 
 ## How to Use
@@ -35,9 +37,6 @@ bun install
 ```bash
 bun dev
 ```
-
-Open [http://localhost:3001](http://localhost:3001) in your browser.
-
 
 ## License
 
