@@ -18,7 +18,7 @@ export const defaultHtml = `<article
     </header>
     <img
       class="w-full rounded-[14px]"
-      src="https://drive.google.com/file/d/1wP-S26k7n21B5Z4NrueS1F7mp0ALwY3H"
+      src="https://drive.google.com/thumbnail?id=1wP-S26k7n21B5Z4NrueS1F7mp0ALwY3H"
       alt="Profile picture missing"
     />
     <nav class="flex flex-col gap-2 font-mono">
