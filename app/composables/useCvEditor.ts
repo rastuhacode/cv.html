@@ -40,8 +40,7 @@ export function useCvEditor() {
   })
 
   function buildFullDocument(html: string, css: string, htmlHead: string) {
-    const scriptTag = '<script src="/tailwind-cdn.js">'
-      + '<' + '/script>'
+    const scriptTag = '<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>'
     return `<!DOCTYPE html>
             <html class="overflow-hidden min-h-fit">
               <head>
