@@ -108,6 +108,17 @@ function handleFileChange(event: Event) {
       <UTooltip text="Toggle Theme">
         <UColorModeButton size="sm" />
       </UTooltip>
+
+      <UTooltip text="GitHub">
+        <UButton
+          icon="i-lucide-github"
+          color="neutral"
+          variant="ghost"
+          size="sm"
+          to="https://github.com/rastuhacode/cv.html"
+          target="_blank"
+        />
+      </UTooltip>
     </div>
 
     <input
