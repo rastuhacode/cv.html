@@ -2,10 +2,10 @@
 const { yamlContent, hbsContent, cssContent, htmlHeadContent, activeTab } = useCvEditor()
 
 const tabs = [
-  { label: 'YAML', icon: 'i-lucide-file-text', value: 'yaml' as const },
+  { label: 'Content', icon: 'i-lucide-file-text', value: 'yaml' as const },
   { label: 'Template', icon: 'i-lucide-code', value: 'hbs' as const },
-  { label: 'CSS', icon: 'i-lucide-palette', value: 'css' as const },
-  { label: 'HEAD', icon: 'i-lucide-code-xml', value: 'head' as const }
+  { label: 'Styles', icon: 'i-lucide-palette', value: 'css' as const },
+  { label: 'Head', icon: 'i-lucide-code-xml', value: 'head' as const }
 ]
 
 // Buffer yaml to update preview on cmd + s

@@ -1,0 +1,200 @@
+<article
+  lang="en"
+  class="relative bg-white w-[210mm] min-w-[210mm] flex h-[594mm] mx-auto"
+>
+  <aside
+    class="w-[38%] text-white bg-black px-5 py-5 flex flex-col gap-10 leading-[16px] text-[10pt]"
+  >
+    <header class="flex flex-col gap-4">
+      <h1
+        class="font-semibold leading-[50px] text-[32pt]"
+        style="font-family: Amatic SC"
+      >
+        {{cv.name}}
+      </h1>
+      <p class="font-mono text-[14pt] leading-[28px]">{{cv.title}}</p>
+    </header>
+
+    <img
+      class="w-full rounded-[14px]"
+      src="{{cv.picture}}"
+      alt="Profile picture missing"
+    />
+
+    {{#if cv.contacts}}
+      <nav class="flex flex-col gap-2 font-mono">
+        {{#each cv.contacts}}
+          <a
+            href="{{this.url}}"
+            rel="noopener noreferrer"
+            target="_blank"
+            class="flex items-center text-blue-200 gap-2 break-word no-underline"
+          >
+            {{this.label}}
+          </a>
+        {{/each}}
+      </nav>
+    {{/if}}
+    {{#if cv.profile}}
+      <section class="flex flex-col gap-4 break-word">
+        <h2
+          class="border-white border-b border-t text-center py-1 font-bold uppercase text-[13.5pt] leading-[22px] tracking-[0.5px]"
+        >
+          Profile
+        </h2>
+        {{#each cv.profile}}
+          <p>{{{this}}}</p>
+        {{/each}}
+      </section>
+    {{/if}}
+  </aside>
+
+  <main
+    class="bg-white w-full px-5 pb-5 pt-8 text-black flex flex-col gap-14 leading-[16px] text-[10pt]"
+  >
+    {{#if cv.experience}}
+      <section class="flex flex-col gap-7">
+        <h2
+          class="border-black border-b border-t text-center py-1 font-bold uppercase text-[13.5pt] leading-[22px] tracking-[0.5px]"
+        >
+          Professional Experience
+        </h2>
+
+        {{#each cv.experience}}
+          <article class="flex flex-col gap-2">
+            <header class="flex flex-col gap-0.5">
+              <div class="flex items-center leading-[18px] text-[11.5pt]">
+                {{#if this.companyUrl}}
+                  <a
+                    href="{{this.companyUrl}}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-blue-800 no-underline flex items-center"
+                  >
+                    <span class="font-bold">{{this.company}}</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 36 36"
+                      class="size-4 fill-blue-800"
+                    >
+                      <path
+                        d="M17.6 24.32l-2.46 2.44a4 4 0 01-5.62 0 3.92 3.92 0 010-5.55l4.69-4.65a4 4 0 015.62 0 3.86 3.86 0 011 1.71 2 2 0 00.27-.27l1.29-1.28a5.89 5.89 0 00-1.15-1.62 6 6 0 00-8.44 0l-4.7 4.69a5.91 5.91 0 000 8.39 6 6 0 008.44 0l3.65-3.62h-.5a8 8 0 01-2.09-.24z"
+                      ></path>
+                      <path
+                        d="M28.61 7.82a6 6 0 00-8.44 0l-3.65 3.62h.49a8 8 0 012.1.28l2.46-2.44a4 4 0 015.62 0 3.92 3.92 0 010 5.55l-4.69 4.65a4 4 0 01-5.62 0 3.86 3.86 0 01-1-1.71 2 2 0 00-.28.23l-1.29 1.28a5.89 5.89 0 001.15 1.62 6 6 0 008.44 0l4.69-4.65a5.92 5.92 0 000-8.39z"
+                      ></path>
+                      <path fill="none" d="M0 0H36V36H0z"></path>
+                    </svg>
+                  </a>
+                {{else}}
+                  <span class="font-bold">{{this.company}}</span>
+                {{/if}}
+                <span class="font-bold">, {{this.role}}</span>
+              </div>
+              <p class="flex flex-wrap leading-[18px]">
+                {{this.period}}
+                <span class="whitespace-pre"> | </span>
+                {{this.location}}
+              </p>
+            </header>
+            {{#if this.description}}
+              <p>{{{this.description}}}</p>
+            {{/if}}
+            {{#if this.highlights}}
+              <ul class="list-inside break-word flex flex-col gap-2">
+                {{#each this.highlights}}
+                  <li>{{{this}}}</li>
+                {{/each}}
+              </ul>
+            {{/if}}
+            {{#if this.techStack}}
+              <p>
+                <span class="text-[12pt] font-bold text-violet-800">
+                  Tech Stack
+                </span>
+                <br />
+                <strong>{{this.techStack}}</strong>
+              </p>
+            {{/if}}
+          </article>
+        {{/each}}
+      </section>
+    {{/if}}
+    {{#if cv.education}}
+      <section class="flex flex-col gap-7">
+        <h2
+          class="border-black border-b border-t text-center py-1 font-bold uppercase text-[13.5pt] leading-[22px] tracking-[0.5px]"
+        >
+          Education
+        </h2>
+
+        {{#each cv.education}}
+          <article class="flex flex-col gap-2">
+            <header class="flex flex-col gap-0.5">
+              <div class="flex items-center leading-[18px] text-[11.5pt]">
+                {{#if this.institutionUrl}}
+                  <a
+                    href="{{this.institutionUrl}}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-blue-800 no-underline flex items-center"
+                  >
+                    <span class="font-bold">{{this.institution}}</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 36 36"
+                      class="size-4 fill-blue-800"
+                    >
+                      <path
+                        d="M17.6 24.32l-2.46 2.44a4 4 0 01-5.62 0 3.92 3.92 0 010-5.55l4.69-4.65a4 4 0 015.62 0 3.86 3.86 0 011 1.71 2 2 0 00.27-.27l1.29-1.28a5.89 5.89 0 00-1.15-1.62 6 6 0 00-8.44 0l-4.7 4.69a5.91 5.91 0 000 8.39 6 6 0 008.44 0l3.65-3.62h-.5a8 8 0 01-2.09-.24z"
+                      ></path>
+                      <path
+                        d="M28.61 7.82a6 6 0 00-8.44 0l-3.65 3.62h.49a8 8 0 012.1.28l2.46-2.44a4 4 0 015.62 0 3.92 3.92 0 010 5.55l-4.69 4.65a4 4 0 01-5.62 0 3.86 3.86 0 01-1-1.71 2 2 0 00-.28.23l-1.29 1.28a5.89 5.89 0 001.15 1.62 6 6 0 008.44 0l4.69-4.65a5.92 5.92 0 000-8.39z"
+                      ></path>
+                      <path fill="none" d="M0 0H36V36H0z"></path>
+                    </svg>
+                  </a>
+                {{else}}
+                  <span class="font-bold">{{this.institution}}</span>
+                {{/if}}
+              </div>
+              {{#if this.degree}}
+                <span class="font-bold text-[11.5pt]"> {{this.degree}} </span>
+              {{/if}}
+              <p class="flex flex-wrap leading-[18px]">
+                {{this.period}}
+                <span class="whitespace-pre"> | </span>
+                {{this.location}}
+              </p>
+            </header>
+            {{#if this.highlights}}
+              <ul class="list-inside break-word flex flex-col gap-2">
+                {{#each this.highlights}}
+                  <li>{{{this}}}</li>
+                {{/each}}
+              </ul>
+            {{/if}}
+          </article>
+        {{/each}}
+      </section>
+    {{/if}}
+    {{#if cv.languages}}
+      <section class="flex flex-col gap-7">
+        <h2
+          class="border-black border-b border-t text-center py-1 font-bold uppercase text-[13.5pt] leading-[22px] tracking-[0.5px]"
+        >
+          Languages
+        </h2>
+
+        <dl class="grid grid-cols-2">
+          {{#each cv.languages}}
+            <div class="flex flex-col">
+              <dt class="font-bold">{{this.name}}</dt>
+              <dd>{{this.level}}</dd>
+            </div>
+          {{/each}}
+        </dl>
+      </section>
+    {{/if}}
+  </main>
+</article>

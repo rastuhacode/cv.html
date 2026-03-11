@@ -1,5 +1,6 @@
 import * as yaml from 'js-yaml'
 import Handlebars from 'handlebars'
+import JSZip from 'jszip'
 
 const STORAGE_KEY_YAML = 'cv-editor-yaml'
 const STORAGE_KEY_HBS = 'cv-editor-hbs'
@@ -27,8 +28,7 @@ export function useCvEditor() {
       const html = template({ cv: cvData })
       compileError.value = null
       return html
-    }
-    catch (e: unknown) {
+    } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : 'Compilation error'
       compileError.value = msg
       return `<div style="color:red;padding:20px;font-family:monospace"><b>Error:</b> ${msg}</div>`
@@ -108,12 +108,34 @@ export function useCvEditor() {
   const downloadHtml = () => downloadFile('cv.html', combinedDocument.value)
   const downloadYaml = () => downloadFile('cv.yaml', yamlContent.value)
   const downloadHbs = () => downloadFile('cv.hbs', hbsContent.value)
+  const downloadCss = () => downloadFile('cv.css', cssContent.value)
+  const downloadHtmlHead = () => downloadFile('cv.htmlhead', htmlHeadContent.value)
+
+  const downloadBundle = async () => {
+    const zip = new JSZip()
+
+    zip.file('content.yaml', yamlContent.value)
+    zip.file('template.hbs', hbsContent.value)
+    zip.file('styles.css', cssContent.value)
+    zip.file('head.txt', htmlHeadContent.value)
+    zip.file('cv.html', combinedDocument.value)
+
+    const blob = await zip.generateAsync({ type: 'blob' })
+
+    downloadFile('cv.zip', blob)
+  }
 
   async function importYaml(file: File) {
     yamlContent.value = await file.text()
   }
   async function importHbs(file: File) {
     hbsContent.value = await file.text()
+  }
+  async function importCss(file: File) {
+    cssContent.value = await file.text()
+  }
+  async function importHtmlHead(file: File) {
+    htmlHeadContent.value = await file.text()
   }
 
   function resetToDefault() {
@@ -149,9 +171,14 @@ export function useCvEditor() {
     downloadHtml,
     downloadYaml,
     downloadHbs,
+    downloadCss,
+    downloadHtmlHead,
+    downloadBundle,
 
     importYaml,
     importHbs,
+    importCss,
+    importHtmlHead,
 
     resetToDefault
   }
