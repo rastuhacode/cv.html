@@ -1,21 +1,31 @@
 <script setup lang="ts">
-const { htmlContent, cssContent, activeTab, htmlHeadContent } = useCvEditor()
+const { yamlContent, hbsContent, cssContent, htmlHeadContent, activeTab } = useCvEditor()
 
 const tabs = [
-  { label: 'HTML', icon: 'i-lucide-code', value: 'html' as const },
+  { label: 'YAML', icon: 'i-lucide-file-text', value: 'yaml' as const },
+  { label: 'Template', icon: 'i-lucide-code', value: 'hbs' as const },
   { label: 'CSS', icon: 'i-lucide-palette', value: 'css' as const },
   { label: 'HEAD', icon: 'i-lucide-code-xml', value: 'head' as const }
 ]
 
-// Buffer html to update preview on cmd + s
+// Buffer yaml to update preview on cmd + s
 // TODO: Refactor to not duplicate code for each buffer
-const bufferHtml = ref(htmlContent.value)
-const isHtmlEqual = computed(() => bufferHtml.value === htmlContent.value)
-watch(htmlContent, (value) => {
-  bufferHtml.value = value
+const bufferYaml = ref(yamlContent.value)
+const isYamlEqual = computed(() => bufferYaml.value === yamlContent.value)
+watch(yamlContent, (value) => {
+  bufferYaml.value = value
 }, { immediate: true })
-const handleSaveHtml = () => {
-  htmlContent.value = bufferHtml.value
+const handleSaveYaml = () => {
+  yamlContent.value = bufferYaml.value
+}
+
+const bufferHbs = ref(hbsContent.value)
+const isHbsEqual = computed(() => bufferHbs.value === hbsContent.value)
+watch(hbsContent, (value) => {
+  bufferHbs.value = value
+}, { immediate: true })
+const handleSaveHbs = () => {
+  hbsContent.value = bufferHbs.value
 }
 
 const bufferCss = ref(cssContent.value)
@@ -35,6 +45,8 @@ watch(htmlHeadContent, (value) => {
 const handleSaveHtmlHead = () => {
   htmlHeadContent.value = bufferHtmlHead.value
 }
+
+// TODO: refactor to use NuxtUI tabs and don't repeat the same code for each tab
 </script>
 
 <template>
@@ -59,8 +71,12 @@ const handleSaveHtmlHead = () => {
           class="size-2"
         >
           <div
-            v-if="!isHtmlEqual && tab.value === 'html'"
+            v-if="!isYamlEqual && tab.value === 'yaml'"
             class="size-2 bg-primary rounded-full"
+          />
+          <div
+            v-if="!isHbsEqual && tab.value === 'hbs'"
+            class="size-full bg-primary rounded-full"
           />
           <div
             v-if="!isCssEqual && tab.value === 'css'"
@@ -76,10 +92,16 @@ const handleSaveHtmlHead = () => {
 
     <div class="grow overflow-hidden">
       <VMonacoEditor
-        v-show="activeTab === 'html'"
-        v-model="bufferHtml"
-        lang="html"
-        @save="handleSaveHtml"
+        v-show="activeTab === 'yaml'"
+        v-model="bufferYaml"
+        lang="yaml"
+        @save="handleSaveYaml"
+      />
+      <VMonacoEditor
+        v-show="activeTab === 'hbs'"
+        v-model="bufferHbs"
+        lang="handlebars"
+        @save="handleSaveHbs"
       />
       <VMonacoEditor
         v-show="activeTab === 'css'"

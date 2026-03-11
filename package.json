@@ -17,6 +17,8 @@
     "@tailwindcss/typography": "^0.5.19",
     "@vueuse/core": "^14.2.1",
     "@vueuse/nuxt": "^14.2.1",
+    "handlebars": "^4.7.8",
+    "js-yaml": "^4.1.1",
     "monaco-editor": "^0.55.1",
     "nuxt": "^4.3.1",
     "nuxt-monaco-editor": "^1.4.0",
@@ -25,6 +27,7 @@
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.15.2",
+    "@types/js-yaml": "^4.0.9",
     "eslint": "^10.0.3",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.2.5"

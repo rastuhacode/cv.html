@@ -1,20 +1,37 @@
 <script setup lang="ts">
-const { exportToPdf, saveHtml, importHtml, resetToDefault } = useCvEditor()
+const { exportToPdf, downloadHtml, downloadYaml, downloadHbs, importYaml, importHbs, resetToDefault } = useCvEditor()
 
-const fileInputRef = ref<HTMLInputElement | null>(null)
+const yamlInputRef = ref<HTMLInputElement | null>(null)
+const hbsInputRef = ref<HTMLInputElement | null>(null)
 
-function triggerImport() {
-  fileInputRef.value?.click()
-}
-
-function handleFileChange(event: Event) {
+function handleYamlFileChange(event: Event) {
   const input = event.target as HTMLInputElement
   const file = input.files?.[0]
   if (file) {
-    importHtml(file)
+    importYaml(file)
     input.value = ''
   }
 }
+
+function handleHbsFileChange(event: Event) {
+  const input = event.target as HTMLInputElement
+  const file = input.files?.[0]
+  if (file) {
+    importHbs(file)
+    input.value = ''
+  }
+}
+
+const importItems = [
+  [{ label: 'Import YAML', icon: 'i-lucide-file-text', onSelect: () => yamlInputRef.value?.click() }],
+  [{ label: 'Import Template', icon: 'i-lucide-code', onSelect: () => hbsInputRef.value?.click() }]
+]
+
+const exportItems = [
+  [{ label: 'Export YAML', icon: 'i-lucide-file-text', onSelect: () => downloadYaml() }],
+  [{ label: 'Export Template', icon: 'i-lucide-code', onSelect: () => downloadHbs() }],
+  [{ label: 'Export HTML', icon: 'i-lucide-file-code', onSelect: () => downloadHtml() }]
+]
 </script>
 
 <template>
@@ -30,27 +47,29 @@ function handleFileChange(event: Event) {
     </div>
 
     <div class="flex items-center gap-1.5">
-      <UTooltip text="Import HTML file">
-        <UButton
-          icon="i-lucide-upload"
-          color="neutral"
-          variant="ghost"
-          size="sm"
-          aria-label="Import HTML"
-          @click="triggerImport"
-        />
-      </UTooltip>
+      <UDropdownMenu :items="importItems">
+        <UTooltip text="Import file">
+          <UButton
+            icon="i-lucide-upload"
+            color="neutral"
+            variant="ghost"
+            size="sm"
+            aria-label="Import"
+          />
+        </UTooltip>
+      </UDropdownMenu>
 
-      <UTooltip text="Save as HTML">
-        <UButton
-          icon="i-lucide-download"
-          color="neutral"
-          variant="ghost"
-          size="sm"
-          aria-label="Save HTML"
-          @click="saveHtml"
-        />
-      </UTooltip>
+      <UDropdownMenu :items="exportItems">
+        <UTooltip text="Export file">
+          <UButton
+            icon="i-lucide-download"
+            color="neutral"
+            variant="ghost"
+            size="sm"
+            aria-label="Export"
+          />
+        </UTooltip>
+      </UDropdownMenu>
 
       <UModal title="Reset">
         <UTooltip
@@ -71,7 +90,7 @@ function handleFileChange(event: Event) {
               <br>
               <span class="font-bold text-primary">You will lose all your changes.</span>
             </p>
-            <p>If you want to keep them, you can export your HTML and import it later.</p>
+            <p>If you want to keep them, you can export your YAML and template first.</p>
           </section>
         </template>
         <template #footer="{ close }">
@@ -122,11 +141,18 @@ function handleFileChange(event: Event) {
     </div>
 
     <input
-      ref="fileInputRef"
+      ref="yamlInputRef"
       type="file"
-      accept=".html,.htm"
+      accept=".yaml,.yml"
       class="hidden"
-      @change="handleFileChange"
+      @change="handleYamlFileChange"
+    >
+    <input
+      ref="hbsInputRef"
+      type="file"
+      accept=".hbs,.handlebars"
+      class="hidden"
+      @change="handleHbsFileChange"
     >
   </header>
 </template>
