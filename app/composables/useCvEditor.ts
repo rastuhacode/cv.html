@@ -2,12 +2,12 @@ import * as yaml from 'js-yaml'
 import Handlebars from 'handlebars'
 import JSZip from 'jszip'
 
-const STORAGE_KEY_YAML = 'cv-editor-yaml'
-const STORAGE_KEY_HBS = 'cv-editor-hbs'
-const STORAGE_KEY_CSS = 'cv-editor-css'
-const STORAGE_KEY_HTML_HEAD = 'cv-editor-html-head'
+const EDITOR_PREFIX = 'editor__'
 
-const OLD_STORAGE_KEY_HTML = 'cv-editor-html'
+const STORAGE_KEY_YAML = EDITOR_PREFIX + 'yaml'
+const STORAGE_KEY_HBS = EDITOR_PREFIX + 'hbs'
+const STORAGE_KEY_CSS = EDITOR_PREFIX + 'css'
+const STORAGE_KEY_HTML_HEAD = EDITOR_PREFIX + 'html-head'
 
 type ActiveTab = 'yaml' | 'hbs' | 'css' | 'head'
 
@@ -16,8 +16,8 @@ export function useCvEditor() {
   const yamlContent = useState<string>('cv-yaml', () => defaultYaml)
   const hbsContent = useState<string>('cv-hbs', () => defaultHbs)
   const cssContent = useState<string>('cv-css', () => defaultCss)
-  const activeTab = useState<ActiveTab>('cv-active-tab', () => 'yaml')
 
+  const activeTab = useState<ActiveTab>('cv-active-tab', () => 'yaml')
   const isPreviewMarkup = useState<boolean>('cv-is-preview-markup', () => false)
   const compileError = useState<string | null>('cv-compile-error', () => null)
 
@@ -36,54 +36,43 @@ export function useCvEditor() {
   })
 
   if (import.meta.client) {
-    // Migration: clean up old HTML key
-    if (localStorage.getItem(OLD_STORAGE_KEY_HTML) !== null && localStorage.getItem(STORAGE_KEY_YAML) === null) {
-      localStorage.removeItem(OLD_STORAGE_KEY_HTML)
-    }
-
     const savedYaml = localStorage.getItem(STORAGE_KEY_YAML)
     const savedHbs = localStorage.getItem(STORAGE_KEY_HBS)
     const savedCss = localStorage.getItem(STORAGE_KEY_CSS)
     const savedHtmlHead = localStorage.getItem(STORAGE_KEY_HTML_HEAD)
+
     if (savedYaml !== null) yamlContent.value = savedYaml
     if (savedHbs !== null) hbsContent.value = savedHbs
     if (savedCss !== null) cssContent.value = savedCss
     if (savedHtmlHead !== null) htmlHeadContent.value = savedHtmlHead
 
-    // Persist changes to localStorage (debounced)
-    let saveTimeout: ReturnType<typeof setTimeout> | null = null
-    watch(
+    watchDebounced(
       [yamlContent, hbsContent, cssContent, htmlHeadContent],
       () => {
-        if (saveTimeout) clearTimeout(saveTimeout)
-        saveTimeout = setTimeout(() => {
-          localStorage.setItem(STORAGE_KEY_YAML, yamlContent.value)
-          localStorage.setItem(STORAGE_KEY_HBS, hbsContent.value)
-          localStorage.setItem(STORAGE_KEY_CSS, cssContent.value)
-          localStorage.setItem(STORAGE_KEY_HTML_HEAD, htmlHeadContent.value)
-        }, 500)
+        localStorage.setItem(STORAGE_KEY_YAML, yamlContent.value)
+        localStorage.setItem(STORAGE_KEY_HBS, hbsContent.value)
+        localStorage.setItem(STORAGE_KEY_CSS, cssContent.value)
+        localStorage.setItem(STORAGE_KEY_HTML_HEAD, htmlHeadContent.value)
       },
-      { deep: true }
+      { deep: true, debounce: 500 }
     )
   }
 
-  const combinedDocument = computed(() => {
-    return buildFullDocument(compiledHtml.value, cssContent.value, htmlHeadContent.value)
-  })
+  const combinedDocument = computed(() => buildFullDocument(compiledHtml.value, cssContent.value, htmlHeadContent.value))
 
   function buildFullDocument(html: string, css: string, htmlHead: string) {
-    const scriptTag = '<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>'
-    return `<!DOCTYPE html>
-            <html class="overflow-hidden min-h-fit">
-              <head>
-                ${htmlHead}
-                ${scriptTag}
-                <style>${css}</style>
-              </head>
-              <body>
-                ${html}
-              </body>
-            </html>`
+    return `
+    <!DOCTYPE html>
+    <html class="overflow-hidden min-h-auto">
+      <head>
+        ${htmlHead}
+        <style>${css}</style>
+      </head>
+      <body>
+        ${html}
+      </body>
+    </html>
+    `
   }
 
   function exportToPdf() {
@@ -117,7 +106,7 @@ export function useCvEditor() {
     zip.file('content.yaml', yamlContent.value)
     zip.file('template.hbs', hbsContent.value)
     zip.file('styles.css', cssContent.value)
-    zip.file('head.txt', htmlHeadContent.value)
+    zip.file('head.html', htmlHeadContent.value)
     zip.file('cv.html', combinedDocument.value)
 
     const blob = await zip.generateAsync({ type: 'blob' })
@@ -148,8 +137,6 @@ export function useCvEditor() {
       localStorage.removeItem(STORAGE_KEY_HBS)
       localStorage.removeItem(STORAGE_KEY_CSS)
       localStorage.removeItem(STORAGE_KEY_HTML_HEAD)
-
-      localStorage.removeItem(OLD_STORAGE_KEY_HTML)
     }
   }
 
