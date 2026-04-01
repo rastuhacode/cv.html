@@ -1,0 +1,174 @@
+/* Custom styles for your CV */
+/* You can use plain CSS here alongside Tailwind classes in the HTML */
+/* Tip: A4 is 210mm width x 297mm height */
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  font-family: "Inter", sans-serif;
+}
+
+li::marker {
+  content: "–  ";
+  color: #6366f1;
+}
+
+strong {
+  font-weight: 600;
+}
+
+/* ── Keyframes ─────────────────────────────────────────── */
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes clipReveal {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes barGrow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ── Sidebar staggered entrance ────────────────────────── */
+
+.sidebar-animate > * {
+  animation: fadeSlideIn 0.5s ease both;
+}
+.sidebar-animate > *:nth-child(1) { animation-delay: 0.05s; }
+.sidebar-animate > *:nth-child(2) { animation-delay: 0.12s; }
+.sidebar-animate > *:nth-child(3) { animation-delay: 0.19s; }
+.sidebar-animate > *:nth-child(4) { animation-delay: 0.26s; }
+.sidebar-animate > *:nth-child(5) { animation-delay: 0.33s; }
+.sidebar-animate > *:nth-child(6) { animation-delay: 0.40s; }
+
+/* ── Name & title clip reveal ──────────────────────────── */
+
+.clip-reveal {
+  animation: clipReveal 0.6s ease both;
+}
+.clip-reveal-delay {
+  animation: clipReveal 0.6s ease 0.15s both;
+}
+
+/* ── Accent bar grow on scroll ─────────────────────────── */
+
+.accent-bar {
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.in-view .accent-bar {
+  transform: scaleX(1);
+}
+
+/* ── Profile picture 3D tilt ───────────────────────────── */
+
+.picture-tilt-wrap {
+  perspective: 600px;
+}
+.picture-tilt-wrap img {
+  transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+  will-change: transform;
+}
+.picture-tilt-wrap:hover img {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* ── Contact link hover ────────────────────────────────── */
+
+.contact-link {
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+.contact-link:hover {
+  color: #e0e7ff; /* indigo-100 */
+  transform: translateX(3px);
+}
+.contact-dot {
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.contact-link:hover .contact-dot {
+  transform: scale(1.6);
+  background-color: #a5b4fc; /* indigo-300 */
+}
+
+/* ── Experience / Education card hover lift ─────────────── */
+
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 6px;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.10);
+}
+
+/* ── Main-side section entrance on scroll ──────────────── */
+
+.section-animate {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+.section-animate.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Print safety: reset everything ────────────────────── */
+
+@media print {
+  body {
+    width: 210mm;
+    min-height: 297mm;
+  }
+
+  .sidebar-animate > *,
+  .clip-reveal,
+  .clip-reveal-delay,
+  .accent-bar,
+  .in-view .accent-bar,
+  .picture-tilt-wrap img,
+  .contact-link,
+  .contact-dot,
+  .card-hover,
+  .section-animate {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    clip-path: none !important;
+    box-shadow: none !important;
+  }
+
+  .card-hover {
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+  }
+}

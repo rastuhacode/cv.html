@@ -3,13 +3,22 @@ import type * as Monaco from 'monaco-editor'
 import { KeyCode, KeyMod } from 'monaco-editor'
 
 export type MonacoEditorOptions = Monaco.editor.IStandaloneEditorConstructionOptions
-export type MonacoEditorLang = 'html' | 'css'
+export type MonacoEditorLang = 'html' | 'css' | 'yaml' | 'handlebars'
 export type MonacoCodeEditor = Monaco.editor.IStandaloneCodeEditor
 
 export const MonacoEditorLang: Record<MonacoEditorLang, MonacoEditorLang> = {
   html: 'html',
-  css: 'css'
+  css: 'css',
+  yaml: 'yaml',
+  handlebars: 'handlebars'
 } as const
+
+const formatters: Record<MonacoEditorLang, (code: string) => Promise<string>> = {
+  html: formatHtml,
+  css: formatCss,
+  yaml: formatYaml,
+  handlebars: formatHandlebars
+}
 </script>
 
 <script setup lang="ts">
@@ -45,14 +54,19 @@ const mergedEditorOptions = computed(() => ({
   theme: theme.value
 }))
 
+const monacoLang = computed(() => {
+  if (props.lang === 'handlebars') return 'html'
+  return props.lang
+})
+
 const handleLoad = (editor: MonacoCodeEditor) => {
   editor.addAction({
     id: `format-${props.lang}`,
     label: `Format ${props.lang}`,
     keybindings: [KeyMod.CtrlCmd | KeyCode.KeyS],
     run: async () => {
-      const format = props.lang === 'html' ? formatHtml : formatCss
-      const formatted = await format(props.modelValue)
+      const fmt = formatters[props.lang]
+      const formatted = await fmt(props.modelValue)
       emits('update:modelValue', formatted)
       emits('save', editor)
     }
@@ -73,7 +87,7 @@ defineExpose({
   <MonacoEditor
     ref="editorRef"
     :model-value="props.modelValue"
-    :lang="props.lang"
+    :lang="monacoLang"
     :options="mergedEditorOptions"
     class="h-full"
     @update:model-value="emits('update:modelValue', $event)"

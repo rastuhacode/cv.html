@@ -1,6 +1,7 @@
 import { format } from 'prettier/standalone.js'
 import htmlParser from 'prettier/plugins/html'
 import cssParser from 'prettier/plugins/postcss'
+import yamlParser from 'prettier/plugins/yaml'
 
 type Formatter = (code: string) => Promise<string>
 
@@ -26,4 +27,25 @@ export const formatCss: Formatter = async (css: string) => {
     parser: 'css',
     plugins: [cssParser]
   })
+}
+
+/**
+ * Format the given YAML code using Prettier
+ * @param yaml - The YAML code to format
+ * @returns The formatted YAML code
+ */
+export const formatYaml: Formatter = async (yaml: string) => {
+  return await format(yaml, {
+    parser: 'yaml',
+    plugins: [yamlParser]
+  })
+}
+
+/**
+ * Format the given Handlebars code using Prettier
+ * @param hbs - The Handlebars code to format
+ * @returns The formatted Handlebars code
+ */
+export const formatHandlebars: Formatter = async (hbs: string) => {
+  return await formatHtml(hbs)
 }
