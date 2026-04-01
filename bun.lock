@@ -24,7 +24,7 @@
         "@nuxt/eslint": "^1.15.2",
         "@types/js-yaml": "^4.0.9",
         "eslint": "^10.0.3",
-        "typescript": "^5.9.3",
+        "typescript": "~5.9.3",
         "vue-tsc": "^3.2.5",
       },
     },

@@ -3,198 +3,256 @@
   class="relative bg-white w-[210mm] min-w-[210mm] flex h-[594mm] mx-auto"
 >
   <aside
-    class="w-[38%] text-white bg-black px-5 py-5 flex flex-col gap-10 leading-[16px] text-[10pt]"
+    class="sidebar-animate w-[35%] text-white bg-slate-900 px-6 py-6 flex flex-col gap-6 leading-[16px] text-[10pt]"
   >
-    <header class="flex flex-col gap-4">
+    <header class="flex flex-col gap-3">
       <h1
-        class="font-semibold leading-[50px] text-[32pt]"
-        style="font-family: Amatic SC"
+        class="clip-reveal font-bold leading-[42px] text-[28pt] tracking-tight"
+        style="font-family: 'Sora', sans-serif"
       >
         {{cv.name}}
       </h1>
-      <p class="font-mono text-[14pt] leading-[28px]">{{cv.title}}</p>
+      <p
+        class="clip-reveal-delay text-indigo-300 text-[13pt] leading-[24px] font-medium tracking-wide"
+      >
+        {{cv.title}}
+      </p>
     </header>
 
-    <img
-      class="w-full rounded-[14px]"
-      src="{{cv.picture}}"
-      alt="Profile picture missing"
-    />
+    <div class="picture-tilt-wrap" data-tilt>
+      <img class="w-full rounded-xl" src="{{cv.picture}}" alt="Profile picture" />
+    </div>
 
     {{#if cv.contacts}}
-      <nav class="flex flex-col gap-2 font-mono">
-        {{#each cv.contacts}}
-          <a
-            href="{{this.url}}"
-            rel="noopener noreferrer"
-            target="_blank"
-            class="flex items-center text-blue-200 gap-2 break-word no-underline"
-          >
-            {{this.label}}
-          </a>
-        {{/each}}
-      </nav>
-    {{/if}}
-    {{#if cv.profile}}
-      <section class="flex flex-col gap-4 break-word">
+    <nav class="flex flex-col gap-2.5">
+      {{#each cv.contacts}}
+      <a
+        href="{{this.url}}"
+        rel="noopener noreferrer"
+        target="_blank"
+        class="contact-link flex items-center text-slate-300 gap-2.5 wrap-break-word no-underline text-[9.5pt]"
+      >
+        <span class="contact-dot w-1.5 h-1.5 rounded-full bg-indigo-400 shrink-0"></span>
+        {{this.label}}
+      </a>
+      {{/each}}
+    </nav>
+    {{/if}} {{#if cv.profile}}
+    <section class="flex flex-col gap-3 wrap-break-word in-view">
+      <div>
         <h2
-          class="border-white border-b border-t text-center py-1 font-bold uppercase text-[13.5pt] leading-[22px] tracking-[0.5px]"
+          class="text-[12pt] font-bold tracking-wide text-indigo-300 uppercase"
         >
           Profile
         </h2>
-        {{#each cv.profile}}
-          <p>{{{this}}}</p>
-        {{/each}}
-      </section>
+        <div class="accent-bar w-8 h-0.5 bg-indigo-400 rounded-full mt-1.5"></div>
+      </div>
+      {{#each cv.profile}}
+      <p class="leading-[17px] text-slate-200">{{{this}}}</p>
+      {{/each}}
+    </section>
     {{/if}}
   </aside>
 
   <main
-    class="bg-white w-full px-5 pb-5 pt-8 text-black flex flex-col gap-14 leading-[16px] text-[10pt]"
+    class="bg-white w-full px-6 pb-5 pt-7 text-slate-800 flex flex-col gap-10 leading-[16px] text-[10pt] box-decoration-clone"
   >
     {{#if cv.experience}}
-      <section class="flex flex-col gap-7">
-        <h2
-          class="border-black border-b border-t text-center py-1 font-bold uppercase text-[13.5pt] leading-[22px] tracking-[0.5px]"
-        >
+    <section class="section-animate flex flex-col gap-6">
+      <div>
+        <h2 class="text-[14pt] font-bold tracking-tight text-slate-900">
           Professional Experience
         </h2>
+        <div class="accent-bar w-10 h-0.5 bg-indigo-500 rounded-full mt-2"></div>
+      </div>
 
-        {{#each cv.experience}}
-          <article class="flex flex-col gap-2">
-            <header class="flex flex-col gap-0.5">
-              <div class="flex items-center leading-[18px] text-[11.5pt]">
-                {{#if this.companyUrl}}
-                  <a
-                    href="{{this.companyUrl}}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-blue-800 no-underline flex items-center"
-                  >
-                    <span class="font-bold">{{this.company}}</span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 36 36"
-                      class="size-4 fill-blue-800"
-                    >
-                      <path
-                        d="M17.6 24.32l-2.46 2.44a4 4 0 01-5.62 0 3.92 3.92 0 010-5.55l4.69-4.65a4 4 0 015.62 0 3.86 3.86 0 011 1.71 2 2 0 00.27-.27l1.29-1.28a5.89 5.89 0 00-1.15-1.62 6 6 0 00-8.44 0l-4.7 4.69a5.91 5.91 0 000 8.39 6 6 0 008.44 0l3.65-3.62h-.5a8 8 0 01-2.09-.24z"
-                      ></path>
-                      <path
-                        d="M28.61 7.82a6 6 0 00-8.44 0l-3.65 3.62h.49a8 8 0 012.1.28l2.46-2.44a4 4 0 015.62 0 3.92 3.92 0 010 5.55l-4.69 4.65a4 4 0 01-5.62 0 3.86 3.86 0 01-1-1.71 2 2 0 00-.28.23l-1.29 1.28a5.89 5.89 0 001.15 1.62 6 6 0 008.44 0l4.69-4.65a5.92 5.92 0 000-8.39z"
-                      ></path>
-                      <path fill="none" d="M0 0H36V36H0z"></path>
-                    </svg>
-                  </a>
-                {{else}}
-                  <span class="font-bold">{{this.company}}</span>
-                {{/if}}
-                <span class="font-bold">, {{this.role}}</span>
-              </div>
-              <p class="flex flex-wrap leading-[18px]">
-                {{this.period}}
-                <span class="whitespace-pre"> | </span>
-                {{this.location}}
-              </p>
-            </header>
-            {{#if this.description}}
-              <p>{{{this.description}}}</p>
+      {{#each cv.experience}}
+      <article class="card-hover flex flex-col gap-1.5 break-inside-avoid-page p-2 -mx-2">
+        <header class="flex flex-col gap-0.5">
+          <div class="flex items-center leading-[18px] text-[11.5pt]">
+            {{#if this.companyUrl}}
+            <a
+              href="{{this.companyUrl}}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-indigo-600 no-underline flex items-center font-bold"
+            >
+              {{this.company}}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="size-3 ml-0.5 opacity-60"
+              >
+                <path
+                  d="M6.22 8.72a.75.75 0 0 0 1.06 1.06l5.22-5.22v1.69a.75.75 0 0 0 1.5 0v-3.5a.75.75 0 0 0-.75-.75h-3.5a.75.75 0 0 0 0 1.5h1.69L6.22 8.72Z"
+                />
+                <path
+                  d="M3.5 6.75c0-.69.56-1.25 1.25-1.25H7A.75.75 0 0 0 7 4H4.75A2.75 2.75 0 0 0 2 6.75v4.5A2.75 2.75 0 0 0 4.75 14h4.5A2.75 2.75 0 0 0 12 11.25V9a.75.75 0 0 0-1.5 0v2.25c0 .69-.56 1.25-1.25 1.25h-4.5c-.69 0-1.25-.56-1.25-1.25v-4.5Z"
+                />
+              </svg>
+            </a>
+            {{else}}
+            <span class="font-bold">{{this.company}}</span>
             {{/if}}
-            {{#if this.highlights}}
-              <ul class="list-inside break-word flex flex-col gap-2">
-                {{#each this.highlights}}
-                  <li>{{{this}}}</li>
-                {{/each}}
-              </ul>
-            {{/if}}
-            {{#if this.techStack}}
-              <p>
-                <span class="text-[12pt] font-bold text-violet-800">
-                  Tech Stack
-                </span>
-                <br />
-                <strong>{{this.techStack}}</strong>
-              </p>
-            {{/if}}
-          </article>
-        {{/each}}
-      </section>
-    {{/if}}
-    {{#if cv.education}}
-      <section class="flex flex-col gap-7">
-        <h2
-          class="border-black border-b border-t text-center py-1 font-bold uppercase text-[13.5pt] leading-[22px] tracking-[0.5px]"
+            <span class="mx-1.5 text-slate-300 font-light">·</span>
+            <span class="font-semibold text-slate-700">{{this.role}}</span>
+          </div>
+          <p class="flex flex-wrap leading-[18px] text-slate-500 text-[9.5pt]">
+            {{this.period}}
+            <span class="mx-1.5">·</span>
+            {{this.location}}
+          </p>
+        </header>
+        {{#if this.description}}
+        <p class="text-slate-600 leading-[17px]">{{{this.description}}}</p>
+        {{/if}} {{#if this.highlights}}
+        <ul
+          class="list-inside wrap-break-word flex flex-col gap-1.5 text-slate-700"
         >
+          {{#each this.highlights}}
+          <li>{{{this}}}</li>
+          {{/each}}
+        </ul>
+        {{/if}} {{#if this.techStack}}
+        <div class="mt-0.5">
+          <span
+            class="text-[9pt] font-bold text-indigo-600 uppercase tracking-wider"
+          >
+            Tech Stack
+          </span>
+          <p class="mt-0.5 text-[9pt] text-slate-500 leading-[16px]">
+            {{this.techStack}}
+          </p>
+        </div>
+        {{/if}}
+      </article>
+      {{/each}}
+    </section>
+    {{/if}} {{#if cv.education}}
+    <section class="section-animate flex flex-col gap-6">
+      <div>
+        <h2 class="text-[14pt] font-bold tracking-tight text-slate-900">
           Education
         </h2>
+        <div class="accent-bar w-10 h-0.5 bg-indigo-500 rounded-full mt-2"></div>
+      </div>
 
-        {{#each cv.education}}
-          <article class="flex flex-col gap-2">
-            <header class="flex flex-col gap-0.5">
-              <div class="flex items-center leading-[18px] text-[11.5pt]">
-                {{#if this.institutionUrl}}
-                  <a
-                    href="{{this.institutionUrl}}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-blue-800 no-underline flex items-center"
-                  >
-                    <span class="font-bold">{{this.institution}}</span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 36 36"
-                      class="size-4 fill-blue-800"
-                    >
-                      <path
-                        d="M17.6 24.32l-2.46 2.44a4 4 0 01-5.62 0 3.92 3.92 0 010-5.55l4.69-4.65a4 4 0 015.62 0 3.86 3.86 0 011 1.71 2 2 0 00.27-.27l1.29-1.28a5.89 5.89 0 00-1.15-1.62 6 6 0 00-8.44 0l-4.7 4.69a5.91 5.91 0 000 8.39 6 6 0 008.44 0l3.65-3.62h-.5a8 8 0 01-2.09-.24z"
-                      ></path>
-                      <path
-                        d="M28.61 7.82a6 6 0 00-8.44 0l-3.65 3.62h.49a8 8 0 012.1.28l2.46-2.44a4 4 0 015.62 0 3.92 3.92 0 010 5.55l-4.69 4.65a4 4 0 01-5.62 0 3.86 3.86 0 01-1-1.71 2 2 0 00-.28.23l-1.29 1.28a5.89 5.89 0 001.15 1.62 6 6 0 008.44 0l4.69-4.65a5.92 5.92 0 000-8.39z"
-                      ></path>
-                      <path fill="none" d="M0 0H36V36H0z"></path>
-                    </svg>
-                  </a>
-                {{else}}
-                  <span class="font-bold">{{this.institution}}</span>
-                {{/if}}
-              </div>
-              {{#if this.degree}}
-                <span class="font-bold text-[11.5pt]"> {{this.degree}} </span>
-              {{/if}}
-              <p class="flex flex-wrap leading-[18px]">
-                {{this.period}}
-                <span class="whitespace-pre"> | </span>
-                {{this.location}}
-              </p>
-            </header>
-            {{#if this.highlights}}
-              <ul class="list-inside break-word flex flex-col gap-2">
-                {{#each this.highlights}}
-                  <li>{{{this}}}</li>
-                {{/each}}
-              </ul>
+      {{#each cv.education}}
+      <article class="card-hover flex flex-col gap-1.5 p-2 -mx-2">
+        <header class="flex flex-col gap-0.5">
+          <div class="flex items-center leading-[18px] text-[11.5pt]">
+            {{#if this.institutionUrl}}
+            <a
+              href="{{this.institutionUrl}}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-indigo-600 no-underline flex items-center font-bold"
+            >
+              {{this.institution}}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="size-3 ml-0.5 opacity-60"
+              >
+                <path
+                  d="M6.22 8.72a.75.75 0 0 0 1.06 1.06l5.22-5.22v1.69a.75.75 0 0 0 1.5 0v-3.5a.75.75 0 0 0-.75-.75h-3.5a.75.75 0 0 0 0 1.5h1.69L6.22 8.72Z"
+                />
+                <path
+                  d="M3.5 6.75c0-.69.56-1.25 1.25-1.25H7A.75.75 0 0 0 7 4H4.75A2.75 2.75 0 0 0 2 6.75v4.5A2.75 2.75 0 0 0 4.75 14h4.5A2.75 2.75 0 0 0 12 11.25V9a.75.75 0 0 0-1.5 0v2.25c0 .69-.56 1.25-1.25 1.25h-4.5c-.69 0-1.25-.56-1.25-1.25v-4.5Z"
+                />
+              </svg>
+            </a>
+            {{else}}
+            <span class="font-bold">{{this.institution}}</span>
             {{/if}}
-          </article>
-        {{/each}}
-      </section>
-    {{/if}}
-    {{#if cv.languages}}
-      <section class="flex flex-col gap-7">
-        <h2
-          class="border-black border-b border-t text-center py-1 font-bold uppercase text-[13.5pt] leading-[22px] tracking-[0.5px]"
+          </div>
+          {{#if this.degree}}
+          <span class="font-semibold text-slate-700 text-[10.5pt]">
+            {{this.degree}}
+          </span>
+          {{/if}}
+          <p class="flex flex-wrap leading-[18px] text-slate-500 text-[9.5pt]">
+            {{this.period}}
+            <span class="mx-1.5">·</span>
+            {{this.location}}
+          </p>
+        </header>
+        {{#if this.highlights}}
+        <ul
+          class="list-inside wrap-break-word flex flex-col gap-1.5 text-slate-700"
         >
+          {{#each this.highlights}}
+          <li>{{{this}}}</li>
+          {{/each}}
+        </ul>
+        {{/if}}
+      </article>
+      {{/each}}
+    </section>
+    {{/if}} {{#if cv.languages}}
+    <section class="section-animate flex flex-col gap-4">
+      <div>
+        <h2 class="text-[14pt] font-bold tracking-tight text-slate-900">
           Languages
         </h2>
+        <div class="accent-bar w-10 h-0.5 bg-indigo-500 rounded-full mt-2"></div>
+      </div>
 
-        <dl class="grid grid-cols-2">
-          {{#each cv.languages}}
-            <div class="flex flex-col">
-              <dt class="font-bold">{{this.name}}</dt>
-              <dd>{{this.level}}</dd>
-            </div>
-          {{/each}}
-        </dl>
-      </section>
+      <dl class="flex gap-8">
+        {{#each cv.languages}}
+        <div class="flex flex-col">
+          <dt class="font-bold text-slate-800">{{this.name}}</dt>
+          <dd class="text-slate-500 text-[9.5pt]">{{this.level}}</dd>
+        </div>
+        {{/each}}
+      </dl>
+    </section>
     {{/if}}
   </main>
 </article>
+
+<script>
+(function () {
+  /* ── Profile picture 3D tilt on mouse move ───────────── */
+  var tiltWrap = document.querySelector('[data-tilt]');
+  if (tiltWrap) {
+    var img = tiltWrap.querySelector('img');
+    var MAX_DEG = 12;
+
+    tiltWrap.addEventListener('mousemove', function (e) {
+      var rect = tiltWrap.getBoundingClientRect();
+      var x = (e.clientX - rect.left) / rect.width;
+      var y = (e.clientY - rect.top) / rect.height;
+      var rotY = (x - 0.5) * MAX_DEG * 2;
+      var rotX = (0.5 - y) * MAX_DEG * 2;
+      img.style.transform =
+        'rotateY(' + rotY + 'deg) rotateX(' + rotX + 'deg) scale(1.03)';
+    });
+
+    tiltWrap.addEventListener('mouseleave', function () {
+      img.style.transform = 'rotateY(0deg) rotateX(0deg) scale(1)';
+    });
+  }
+
+  /* ── IntersectionObserver: add .in-view to sections ──── */
+  var targets = document.querySelectorAll('.section-animate');
+  if (targets.length && 'IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    targets.forEach(function (el) { observer.observe(el); });
+  } else {
+    targets.forEach(function (el) { el.classList.add('in-view'); });
+  }
+})();
+</script>

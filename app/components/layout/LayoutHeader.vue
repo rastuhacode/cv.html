@@ -59,10 +59,10 @@ function handleHbsFileChange(event: Event) {
 
 const importItems: DropdownMenuItem[][] = [
   [
-    { label: 'Import Content', icon: 'i-lucide-file-text', onSelect: yamlInputRef.value?.click },
-    { label: 'Import Template', icon: 'i-lucide-code', onSelect: hbsInputRef.value?.click },
-    { label: 'Import Styles', icon: 'i-lucide-palette', onSelect: cssInputRef.value?.click },
-    { label: 'Import Head', icon: 'i-lucide-code-xml', onSelect: htmlHeadInputRef.value?.click }
+    { label: 'Import Content', icon: 'i-lucide-file-text', onSelect: () => yamlInputRef.value?.click() },
+    { label: 'Import Template', icon: 'i-lucide-code', onSelect: () => hbsInputRef.value?.click() },
+    { label: 'Import Styles', icon: 'i-lucide-palette', onSelect: () => cssInputRef.value?.click() },
+    { label: 'Import Head', icon: 'i-lucide-code-xml', onSelect: () => htmlHeadInputRef.value?.click() }
   ]
 ]
 
