@@ -25,6 +25,22 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2025-01-15',
 
+  vite: {
+    optimizeDeps: {
+      include: [
+        '@vue/devtools-core',
+        '@vue/devtools-kit',
+        'js-yaml',
+        'handlebars', // CJS
+        'jszip', // CJS
+        'prettier/standalone.js', // CJS
+        'prettier/plugins/html',
+        'prettier/plugins/postcss',
+        'prettier/plugins/yaml'
+      ]
+    }
+  },
+
   eslint: {
     config: {
       stylistic: {
