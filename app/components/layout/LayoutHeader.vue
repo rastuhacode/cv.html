@@ -1,24 +1,89 @@
 <script setup lang="ts">
-const { exportToPdf, saveHtml, importHtml, resetToDefault } = useCvEditor()
+import type { DropdownMenuItem } from '@nuxt/ui'
 
-const fileInputRef = ref<HTMLInputElement | null>(null)
+const {
+  exportToPdf,
+  downloadHtml,
+  downloadYaml,
+  downloadHbs,
+  downloadCss,
+  downloadHtmlHead,
+  downloadBundle,
+  importYaml,
+  importHbs,
+  importCss,
+  importHtmlHead,
+  resetToDefault
+} = useCvEditor()
 
-function triggerImport() {
-  fileInputRef.value?.click()
-}
+const yamlInputRef = ref<HTMLInputElement | null>(null)
+const hbsInputRef = ref<HTMLInputElement | null>(null)
+const cssInputRef = ref<HTMLInputElement | null>(null)
+const htmlHeadInputRef = ref<HTMLInputElement | null>(null)
 
-function handleFileChange(event: Event) {
+function handleYamlFileChange(event: Event) {
   const input = event.target as HTMLInputElement
   const file = input.files?.[0]
   if (file) {
-    importHtml(file)
+    importYaml(file)
     input.value = ''
   }
 }
+
+function handleCssFileChange(event: Event) {
+  const input = event.target as HTMLInputElement
+  const file = input.files?.[0]
+  if (file) {
+    importCss(file)
+    input.value = ''
+  }
+}
+
+function handleHtmlHeadFileChange(event: Event) {
+  const input = event.target as HTMLInputElement
+  const file = input.files?.[0]
+  if (file) {
+    importHtmlHead(file)
+    input.value = ''
+  }
+}
+
+function handleHbsFileChange(event: Event) {
+  const input = event.target as HTMLInputElement
+  const file = input.files?.[0]
+  if (file) {
+    importHbs(file)
+    input.value = ''
+  }
+}
+
+const importItems: DropdownMenuItem[][] = [
+  [
+    { label: 'Import Content', icon: 'i-lucide-file-text', onSelect: () => yamlInputRef.value?.click() },
+    { label: 'Import Template', icon: 'i-lucide-code', onSelect: () => hbsInputRef.value?.click() },
+    { label: 'Import Styles', icon: 'i-lucide-palette', onSelect: () => cssInputRef.value?.click() },
+    { label: 'Import Head', icon: 'i-lucide-code-xml', onSelect: () => htmlHeadInputRef.value?.click() }
+  ]
+]
+
+const exportItems: DropdownMenuItem[][] = [
+  [{ label: 'Export Bundle', icon: 'i-lucide-package', onSelect: downloadBundle }],
+  [
+    { label: 'Export Content', icon: 'i-lucide-file-text', onSelect: downloadYaml },
+    { label: 'Export Template', icon: 'i-lucide-code', onSelect: downloadHbs },
+    { label: 'Export Styles', icon: 'i-lucide-palette', onSelect: downloadCss },
+    { label: 'Export Head', icon: 'i-lucide-code-xml', onSelect: downloadHtmlHead },
+    { label: 'Export HTML', icon: 'i-lucide-file-code', onSelect: downloadHtml }
+  ]
+]
+
+// TODO: Remove repeatable file inputs for each file type
 </script>
 
 <template>
-  <header class="flex items-center justify-between px-4 py-2 border-b border-default bg-elevated">
+  <header
+    class="flex items-center justify-between px-4 py-2 border-b border-default bg-elevated"
+  >
     <div class="flex items-center gap-2">
       <UIcon
         name="i-lucide-file-text"
@@ -30,32 +95,32 @@ function handleFileChange(event: Event) {
     </div>
 
     <div class="flex items-center gap-1.5">
-      <UTooltip text="Import HTML file">
-        <UButton
-          icon="i-lucide-upload"
-          color="neutral"
-          variant="ghost"
-          size="sm"
-          aria-label="Import HTML"
-          @click="triggerImport"
-        />
-      </UTooltip>
+      <UDropdownMenu :items="importItems">
+        <UTooltip text="Import file">
+          <UButton
+            icon="i-lucide-upload"
+            color="neutral"
+            variant="ghost"
+            size="sm"
+            aria-label="Import"
+          />
+        </UTooltip>
+      </UDropdownMenu>
 
-      <UTooltip text="Save as HTML">
-        <UButton
-          icon="i-lucide-download"
-          color="neutral"
-          variant="ghost"
-          size="sm"
-          aria-label="Save HTML"
-          @click="saveHtml"
-        />
-      </UTooltip>
+      <UDropdownMenu :items="exportItems">
+        <UTooltip text="Export file">
+          <UButton
+            icon="i-lucide-download"
+            color="neutral"
+            variant="ghost"
+            size="sm"
+            aria-label="Export"
+          />
+        </UTooltip>
+      </UDropdownMenu>
 
       <UModal title="Reset">
-        <UTooltip
-          text="Reset to default template"
-        >
+        <UTooltip text="Reset to default template">
           <UButton
             icon="i-lucide-rotate-ccw"
             color="neutral"
@@ -71,13 +136,21 @@ function handleFileChange(event: Event) {
               <br>
               <span class="font-bold text-primary">You will lose all your changes.</span>
             </p>
-            <p>If you want to keep them, you can export your HTML and import it later.</p>
+            <p>
+              If you want to keep them, you can export your YAML and template
+              first.
+            </p>
           </section>
         </template>
         <template #footer="{ close }">
           <UButton
             color="primary"
-            @click="() => { close(); return resetToDefault() }"
+            @click="
+              () => {
+                close();
+                return resetToDefault();
+              }
+            "
           >
             Reset
           </UButton>
@@ -122,11 +195,32 @@ function handleFileChange(event: Event) {
     </div>
 
     <input
-      ref="fileInputRef"
+      ref="yamlInputRef"
       type="file"
-      accept=".html,.htm"
+      accept=".yaml,.yml"
       class="hidden"
-      @change="handleFileChange"
+      @change="handleYamlFileChange"
+    >
+    <input
+      ref="hbsInputRef"
+      type="file"
+      accept=".hbs,.handlebars"
+      class="hidden"
+      @change="handleHbsFileChange"
+    >
+    <input
+      ref="cssInputRef"
+      type="file"
+      accept=".css"
+      class="hidden"
+      @change="handleCssFileChange"
+    >
+    <input
+      ref="htmlHeadInputRef"
+      type="file"
+      accept=".html"
+      class="hidden"
+      @change="handleHtmlHeadFileChange"
     >
   </header>
 </template>

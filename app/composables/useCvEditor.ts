@@ -1,59 +1,78 @@
-const STORAGE_KEY_HTML = 'cv-editor-html'
-const STORAGE_KEY_CSS = 'cv-editor-css'
-const STORAGE_KEY_HTML_HEAD = 'cv-editor-html-head'
+import * as yaml from 'js-yaml'
+import Handlebars from 'handlebars'
+import JSZip from 'jszip'
+
+const EDITOR_PREFIX = 'editor__'
+
+const STORAGE_KEY_YAML = EDITOR_PREFIX + 'yaml'
+const STORAGE_KEY_HBS = EDITOR_PREFIX + 'hbs'
+const STORAGE_KEY_CSS = EDITOR_PREFIX + 'css'
+const STORAGE_KEY_HTML_HEAD = EDITOR_PREFIX + 'html-head'
+
+type ActiveTab = 'yaml' | 'hbs' | 'css' | 'head'
 
 export function useCvEditor() {
   const htmlHeadContent = useState<string>('cv-html-head', () => defaultHtmlHead)
-  const htmlContent = useState<string>('cv-html', () => defaultHtml)
+  const yamlContent = useState<string>('cv-yaml', () => defaultYaml)
+  const hbsContent = useState<string>('cv-hbs', () => defaultHbs)
   const cssContent = useState<string>('cv-css', () => defaultCss)
-  const activeTab = useState<'html' | 'css' | 'head'>('cv-active-tab', () => 'html')
 
+  const activeTab = useState<ActiveTab>('cv-active-tab', () => 'yaml')
   const isPreviewMarkup = useState<boolean>('cv-is-preview-markup', () => false)
+  const compileError = useState<string | null>('cv-compile-error', () => null)
 
-  // Load from localStorage on client
+  const compiledHtml = computed(() => {
+    try {
+      const cvData = yaml.load(yamlContent.value) || {}
+      const template = Handlebars.compile(hbsContent.value)
+      const html = template({ cv: cvData })
+      compileError.value = null
+      return html
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : 'Compilation error'
+      compileError.value = msg
+      return `<div style="color:red;padding:20px;font-family:monospace"><b>Error:</b> ${msg}</div>`
+    }
+  })
+
   if (import.meta.client) {
-    const savedHtml = localStorage.getItem(STORAGE_KEY_HTML)
+    const savedYaml = localStorage.getItem(STORAGE_KEY_YAML)
+    const savedHbs = localStorage.getItem(STORAGE_KEY_HBS)
     const savedCss = localStorage.getItem(STORAGE_KEY_CSS)
     const savedHtmlHead = localStorage.getItem(STORAGE_KEY_HTML_HEAD)
-    if (savedHtmlHead !== null) htmlHeadContent.value = savedHtmlHead
-    if (savedHtml !== null) htmlContent.value = savedHtml
-    if (savedCss !== null) cssContent.value = savedCss
 
-    // Persist changes to localStorage (debounced)
-    let saveTimeout: ReturnType<typeof setTimeout> | null = null
-    watch(
-      [htmlContent, cssContent],
+    if (savedYaml !== null) yamlContent.value = savedYaml
+    if (savedHbs !== null) hbsContent.value = savedHbs
+    if (savedCss !== null) cssContent.value = savedCss
+    if (savedHtmlHead !== null) htmlHeadContent.value = savedHtmlHead
+
+    watchDebounced(
+      [yamlContent, hbsContent, cssContent, htmlHeadContent],
       () => {
-        if (saveTimeout) clearTimeout(saveTimeout)
-        saveTimeout = setTimeout(() => {
-          localStorage.setItem(STORAGE_KEY_HTML, htmlContent.value)
-          localStorage.setItem(STORAGE_KEY_CSS, cssContent.value)
-          localStorage.setItem(STORAGE_KEY_HTML_HEAD, htmlHeadContent.value)
-        }, 500)
+        localStorage.setItem(STORAGE_KEY_YAML, yamlContent.value)
+        localStorage.setItem(STORAGE_KEY_HBS, hbsContent.value)
+        localStorage.setItem(STORAGE_KEY_CSS, cssContent.value)
+        localStorage.setItem(STORAGE_KEY_HTML_HEAD, htmlHeadContent.value)
       },
-      { deep: true }
+      { deep: true, debounce: 500 }
     )
   }
 
-  const combinedDocument = computed(() => {
-    return buildFullDocument(htmlContent.value, cssContent.value, htmlHeadContent.value)
-  })
+  const combinedDocument = computed(() => buildFullDocument(compiledHtml.value, cssContent.value, htmlHeadContent.value))
 
   function buildFullDocument(html: string, css: string, htmlHead: string) {
-    const scriptTag = '<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>'
-    return `<!DOCTYPE html>
-            <html class="overflow-hidden min-h-fit">
-              <head>
-                <meta charset="utf-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1">
-                ${htmlHead}
-                ${scriptTag}
-                <style>${css}</style>
-              </head>
-              <body>
-                ${html}
-              </body>
-            </html>`
+    return `
+    <!DOCTYPE html>
+    <html class="overflow-hidden min-h-auto">
+      <head>
+        ${htmlHead}
+        <style>${css}</style>
+      </head>
+      <body>
+        ${html}
+      </body>
+    </html>
+    `
   }
 
   function exportToPdf() {
@@ -63,7 +82,7 @@ export function useCvEditor() {
       return
     }
 
-    const printHtml = buildFullDocument(htmlContent.value, cssContent.value, htmlHeadContent.value)
+    const printHtml = combinedDocument.value
     printWindow.document.write(printHtml)
     printWindow.document.close()
 
@@ -75,60 +94,79 @@ export function useCvEditor() {
     })
   }
 
-  function saveHtml() {
-    const fullDoc = buildFullDocument(htmlContent.value, cssContent.value, htmlHeadContent.value)
-    const blob = new Blob([fullDoc], { type: 'text/html' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = 'cv.html'
-    a.click()
-    URL.revokeObjectURL(url)
+  const downloadHtml = () => downloadFile('cv.html', combinedDocument.value)
+  const downloadYaml = () => downloadFile('cv.yaml', yamlContent.value)
+  const downloadHbs = () => downloadFile('cv.hbs', hbsContent.value)
+  const downloadCss = () => downloadFile('cv.css', cssContent.value)
+  const downloadHtmlHead = () => downloadFile('cv.htmlhead', htmlHeadContent.value)
+
+  const downloadBundle = async () => {
+    const zip = new JSZip()
+
+    zip.file('content.yaml', yamlContent.value)
+    zip.file('template.hbs', hbsContent.value)
+    zip.file('styles.css', cssContent.value)
+    zip.file('head.html', htmlHeadContent.value)
+    zip.file('cv.html', combinedDocument.value)
+
+    const blob = await zip.generateAsync({ type: 'blob' })
+
+    downloadFile('cv.zip', blob)
   }
 
-  async function importHtml(file: File) {
-    const text = await file.text()
-
-    // Extract CSS from <style> tags
-    const styleRegex = /<style[^>]*>([\s\S]*?)<\/style>/gi
-    const styles: string[] = []
-    let match = styleRegex.exec(text)
-    while (match) {
-      styles.push(match[1]!.trim())
-      match = styleRegex.exec(text)
-    }
-
-    // Extract body content
-    const bodyMatch = /<body[^>]*>([\s\S]*?)<\/body>/i.exec(text)
-    const bodyContent = bodyMatch ? bodyMatch[1]!.trim() : text.trim()
-
-    htmlContent.value = bodyContent
-    if (styles.length > 0) {
-      cssContent.value = styles.join('\n\n')
-    }
+  async function importYaml(file: File) {
+    yamlContent.value = await file.text()
+  }
+  async function importHbs(file: File) {
+    hbsContent.value = await file.text()
+  }
+  async function importCss(file: File) {
+    cssContent.value = await file.text()
+  }
+  async function importHtmlHead(file: File) {
+    htmlHeadContent.value = await file.text()
   }
 
   function resetToDefault() {
-    htmlContent.value = defaultHtml
+    yamlContent.value = defaultYaml
+    hbsContent.value = defaultHbs
     cssContent.value = defaultCss
     htmlHeadContent.value = defaultHtmlHead
     if (import.meta.client) {
-      localStorage.removeItem(STORAGE_KEY_HTML)
+      localStorage.removeItem(STORAGE_KEY_YAML)
+      localStorage.removeItem(STORAGE_KEY_HBS)
       localStorage.removeItem(STORAGE_KEY_CSS)
       localStorage.removeItem(STORAGE_KEY_HTML_HEAD)
     }
   }
 
   return {
-    htmlContent,
+    yamlContent,
+    hbsContent,
     cssContent,
     htmlHeadContent,
+
     activeTab,
-    combinedDocument,
     isPreviewMarkup,
+
+    compiledHtml,
+    combinedDocument,
+    compileError,
+
     exportToPdf,
-    saveHtml,
-    importHtml,
+
+    downloadHtml,
+    downloadYaml,
+    downloadHbs,
+    downloadCss,
+    downloadHtmlHead,
+    downloadBundle,
+
+    importYaml,
+    importHbs,
+    importCss,
+    importHtmlHead,
+
     resetToDefault
   }
 }
