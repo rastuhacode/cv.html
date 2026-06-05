@@ -65,7 +65,7 @@ experience:
         microservice for compilation and deployment.
       - >-
         Implemented integration with the backend via OpenAPI with automatic
-        generation of backend handlers. Led the integration of Token Studio in
+        generation of backend REST API types. Led the integration of Token Studio in
         the design team, with automatic generation of CSS variables on the
         frontend. Both solutions eliminated repetitive manual integration work,
         freeing roughly 20 story points of team capacity per sprint.
