@@ -1,0 +1,44 @@
+/* You can use this tab for common styles or @page rules, @media (screen / print), etc.      */
+/* Tip: A4 page = 210mm x 297mm.                                                             */
+
+/* Reserve a top/bottom strip on every page so content that overflows onto a */
+/* new page never sticks to the paper edge. Only @page margin is honoured by */
+/* the print engine on continuation pages — padding on the <article> wrapper */
+/* only applies to the start/end of its box, i.e. page 1's top and the very  */
+/* last page's bottom.                                                       */
+@page {
+  size: A4;
+  margin: 14mm 0;
+}
+
+/* Keep page 1's designed bleed-to-top header layout untouched.    */
+/* Without this, page 1 would gain an extra 14mm above the header. */
+@page :first {
+  margin-top: 0;
+}
+
+body {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  /* Use default browser fonts only — otherwise your resume will not be ATS safe.                   */
+  /* You can check all web-safe fonts here: https://www.w3schools.com/cssref/css_websafe_fonts.php  */
+  font-family: Verdana, Arial, sans-serif;
+}
+
+/* ── Screen-only ergonomics: subtle paper shadow when previewing ──────── */
+@media screen {
+  .resume {
+    box-shadow:
+      0 1px 2px rgba(15, 23, 42, 0.04),
+      0 8px 24px rgba(15, 23, 42, 0.08);
+    margin-block: 24px;
+  }
+}
+
+/* ── Narrow-viewport safety: keep print-perfect width on screen ────────── */
+@media screen and (max-width: 220mm) {
+  .resume {
+    box-shadow: none;
+    margin-block: 0;
+  }
+}

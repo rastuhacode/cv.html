@@ -47,6 +47,35 @@ const handleSaveHtmlHead = () => {
 }
 
 // TODO: refactor to use NuxtUI tabs and don't repeat the same code for each tab
+
+const buffer = computed({
+  get: () => {
+    if (activeTab.value === 'yaml') return bufferYaml.value
+    if (activeTab.value === 'hbs') return bufferHbs.value
+    if (activeTab.value === 'css') return bufferCss.value
+    return bufferHtmlHead.value
+  },
+  set: (value: string) => {
+    if (activeTab.value === 'yaml') return bufferYaml.value = value
+    if (activeTab.value === 'hbs') return bufferHbs.value = value
+    if (activeTab.value === 'css') return bufferCss.value = value
+    return bufferHtmlHead.value = value
+  }
+})
+
+const lang = computed(() => {
+  if (activeTab.value === 'yaml') return 'yaml'
+  if (activeTab.value === 'hbs') return 'handlebars'
+  if (activeTab.value === 'css') return 'css'
+  return 'html'
+})
+
+const handleSave = () => {
+  if (activeTab.value === 'yaml') return handleSaveYaml()
+  if (activeTab.value === 'hbs') return handleSaveHbs()
+  if (activeTab.value === 'css') return handleSaveCss()
+  return handleSaveHtmlHead()
+}
 </script>
 
 <template>
@@ -92,28 +121,9 @@ const handleSaveHtmlHead = () => {
 
     <div class="grow overflow-hidden">
       <VMonacoEditor
-        v-show="activeTab === 'yaml'"
-        v-model="bufferYaml"
-        lang="yaml"
-        @save="handleSaveYaml"
-      />
-      <VMonacoEditor
-        v-show="activeTab === 'hbs'"
-        v-model="bufferHbs"
-        lang="handlebars"
-        @save="handleSaveHbs"
-      />
-      <VMonacoEditor
-        v-show="activeTab === 'css'"
-        v-model="bufferCss"
-        lang="css"
-        @save="handleSaveCss"
-      />
-      <VMonacoEditor
-        v-show="activeTab === 'head'"
-        v-model="bufferHtmlHead"
-        lang="html"
-        @save="handleSaveHtmlHead"
+        v-model="buffer"
+        :lang="lang"
+        @save="handleSave"
       />
     </div>
   </div>

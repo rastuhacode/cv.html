@@ -68,9 +68,7 @@ export function useCvEditor() {
         ${htmlHead}
         <style>${css}</style>
       </head>
-      <body>
-        ${html}
-      </body>
+      ${html}
     </html>
     `
   }
