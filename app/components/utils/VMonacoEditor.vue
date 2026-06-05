@@ -65,9 +65,20 @@ const handleLoad = (editor: MonacoCodeEditor) => {
     label: `Format ${props.lang}`,
     keybindings: [KeyMod.CtrlCmd | KeyCode.KeyS],
     run: async () => {
-      const fmt = formatters[props.lang]
-      const formatted = await fmt(props.modelValue)
-      emits('update:modelValue', formatted)
+      const model = editor.getModel()
+      if (!model) return
+
+      const currentValue = model.getValue()
+      const formatted = await formatters[props.lang](currentValue)
+      if (formatted === currentValue) {
+        emits('save', editor)
+        return
+      }
+
+      editor.executeEdits('prettier', [{
+        range: model.getFullModelRange(),
+        text: formatted
+      }])
       emits('save', editor)
     }
   })

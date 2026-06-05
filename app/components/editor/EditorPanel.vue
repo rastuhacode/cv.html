@@ -1,123 +1,77 @@
 <script setup lang="ts">
+import type { TabsItem } from '@nuxt/ui'
+import type { ActiveTab } from '~/composables/useCvEditor'
+import type { MonacoEditorLang } from '~/components/utils/VMonacoEditor.vue'
+
 const { yamlContent, hbsContent, cssContent, htmlHeadContent, activeTab } = useCvEditor()
 
-const tabs = [
-  { label: 'Content', icon: 'i-lucide-file-text', value: 'yaml' as const },
-  { label: 'Template', icon: 'i-lucide-code', value: 'hbs' as const },
-  { label: 'Styles', icon: 'i-lucide-palette', value: 'css' as const },
-  { label: 'Head', icon: 'i-lucide-code-xml', value: 'head' as const }
-]
-
-// Buffer yaml to update preview on cmd + s
-// TODO: Refactor to not duplicate code for each buffer
-const bufferYaml = ref(yamlContent.value)
-const isYamlEqual = computed(() => bufferYaml.value === yamlContent.value)
-watch(yamlContent, (value) => {
-  bufferYaml.value = value
-}, { immediate: true })
-const handleSaveYaml = () => {
-  yamlContent.value = bufferYaml.value
+interface EditorSource {
+  label: string
+  icon: string
+  lang: MonacoEditorLang
+  content: Ref<string>
 }
 
-const bufferHbs = ref(hbsContent.value)
-const isHbsEqual = computed(() => bufferHbs.value === hbsContent.value)
-watch(hbsContent, (value) => {
-  bufferHbs.value = value
-}, { immediate: true })
-const handleSaveHbs = () => {
-  hbsContent.value = bufferHbs.value
-}
+const sources = {
+  yaml: { label: 'Content', icon: 'i-lucide-file-text', lang: 'yaml', content: yamlContent },
+  hbs: { label: 'Template', icon: 'i-lucide-code', lang: 'handlebars', content: hbsContent },
+  css: { label: 'Styles', icon: 'i-lucide-palette', lang: 'css', content: cssContent },
+  head: { label: 'Head', icon: 'i-lucide-code-xml', lang: 'html', content: htmlHeadContent }
+} satisfies Record<ActiveTab, EditorSource>
 
-const bufferCss = ref(cssContent.value)
-const isCssEqual = computed(() => bufferCss.value === cssContent.value)
-watch(cssContent, (value) => {
-  bufferCss.value = value
-}, { immediate: true })
-const handleSaveCss = () => {
-  cssContent.value = bufferCss.value
-}
+const tabKeys = Object.keys(sources) as ActiveTab[]
 
-const bufferHtmlHead = ref(htmlHeadContent.value)
-const isHtmlHeadEqual = computed(() => bufferHtmlHead.value === htmlHeadContent.value)
-watch(htmlHeadContent, (value) => {
-  bufferHtmlHead.value = value
-}, { immediate: true })
-const handleSaveHtmlHead = () => {
-  htmlHeadContent.value = bufferHtmlHead.value
-}
+// Per-tab draft buffers so unsaved edits survive switching tabs. The buffer is
+// flushed to the underlying content (which drives the preview) only on save.
+const buffers = Object.fromEntries(
+  tabKeys.map((key) => {
+    const buffer = ref(sources[key].content.value)
+    watch(sources[key].content, (value) => {
+      buffer.value = value
+    }, { immediate: true })
+    return [key, buffer]
+  })
+) as Record<ActiveTab, Ref<string>>
 
-// TODO: refactor to use NuxtUI tabs and don't repeat the same code for each tab
+const tabItems = tabKeys.map<TabsItem>(key => ({
+  value: key,
+  label: sources[key].label,
+  icon: sources[key].icon
+}))
+
+const isDirty = (key: ActiveTab) => buffers[key].value !== sources[key].content.value
 
 const buffer = computed({
-  get: () => {
-    if (activeTab.value === 'yaml') return bufferYaml.value
-    if (activeTab.value === 'hbs') return bufferHbs.value
-    if (activeTab.value === 'css') return bufferCss.value
-    return bufferHtmlHead.value
-  },
-  set: (value: string) => {
-    if (activeTab.value === 'yaml') return bufferYaml.value = value
-    if (activeTab.value === 'hbs') return bufferHbs.value = value
-    if (activeTab.value === 'css') return bufferCss.value = value
-    return bufferHtmlHead.value = value
-  }
+  get: () => buffers[activeTab.value].value,
+  set: (value) => { buffers[activeTab.value].value = value }
 })
 
-const lang = computed(() => {
-  if (activeTab.value === 'yaml') return 'yaml'
-  if (activeTab.value === 'hbs') return 'handlebars'
-  if (activeTab.value === 'css') return 'css'
-  return 'html'
-})
+const lang = computed(() => sources[activeTab.value].lang)
 
 const handleSave = () => {
-  if (activeTab.value === 'yaml') return handleSaveYaml()
-  if (activeTab.value === 'hbs') return handleSaveHbs()
-  if (activeTab.value === 'css') return handleSaveCss()
-  return handleSaveHtmlHead()
+  sources[activeTab.value].content.value = buffer.value
 }
 </script>
 
 <template>
   <div class="flex flex-col h-full overflow-hidden">
-    <LayoutToolbar>
-      <button
-        v-for="tab in tabs"
-        :key="tab.value"
-        class="flex items-center gap-1.5 px-3 py-2 text-sm font-medium transition-colors relative"
-        :class="activeTab === tab.value
-          ? 'text-highlighted border-b-2 border-primary'
-          : 'text-muted hover:text-default'"
-        @click="activeTab = tab.value"
-      >
-        <UIcon
-          :name="tab.icon"
-          class="size-4"
+    <UTabs
+      :model-value="activeTab"
+      :items="tabItems"
+      color="primary"
+      variant="link"
+      size="sm"
+      :content="false"
+      :ui="{ list: 'bg-background h-10 min-h-10 px-2 py-0 mb-0 items-center' }"
+      @update:model-value="activeTab = $event as ActiveTab"
+    >
+      <template #trailing="{ item }">
+        <span
+          v-if="isDirty(item.value as ActiveTab)"
+          class="size-2 rounded-full bg-primary"
         />
-        {{ tab.label }}
-
-        <div
-          class="size-2"
-        >
-          <div
-            v-if="!isYamlEqual && tab.value === 'yaml'"
-            class="size-2 bg-primary rounded-full"
-          />
-          <div
-            v-if="!isHbsEqual && tab.value === 'hbs'"
-            class="size-full bg-primary rounded-full"
-          />
-          <div
-            v-if="!isCssEqual && tab.value === 'css'"
-            class="size-full bg-primary rounded-full"
-          />
-          <div
-            v-if="!isHtmlHeadEqual && tab.value === 'head'"
-            class="size-full bg-primary rounded-full"
-          />
-        </div>
-      </button>
-    </LayoutToolbar>
+      </template>
+    </UTabs>
 
     <div class="grow overflow-hidden">
       <VMonacoEditor

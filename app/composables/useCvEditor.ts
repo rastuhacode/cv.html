@@ -9,7 +9,7 @@ const STORAGE_KEY_HBS = EDITOR_PREFIX + 'hbs'
 const STORAGE_KEY_CSS = EDITOR_PREFIX + 'css'
 const STORAGE_KEY_HTML_HEAD = EDITOR_PREFIX + 'html-head'
 
-type ActiveTab = 'yaml' | 'hbs' | 'css' | 'head'
+export type ActiveTab = 'yaml' | 'hbs' | 'css' | 'head'
 
 export function useCvEditor() {
   const htmlHeadContent = useState<string>('cv-html-head', () => defaultHtmlHead)
