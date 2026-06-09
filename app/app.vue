@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { ToasterProps } from '@nuxt/ui'
+
 useHead({
   meta: [{ name: 'viewport', content: 'width=device-width, initial-scale=1' }],
   link: [{ rel: 'icon', href: '/favicon.svg' }],
@@ -14,10 +16,12 @@ useSeoMeta({
   ogTitle: title,
   ogDescription: description
 })
+
+const toaster: ToasterProps = { position: 'top-center', expand: false, duration: 3000 }
 </script>
 
 <template>
-  <UApp>
+  <UApp :toaster="toaster">
     <div class="flex flex-col h-screen w-screen max-w-screen max-h-screen overflow-hidden">
       <LayoutHeader />
       <main class="flex flex-col grow overflow-hidden w-full h-full">
