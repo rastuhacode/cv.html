@@ -1,17 +1,5 @@
-<script lang="ts">
-import type * as Monaco from 'monaco-editor'
-import { KeyCode, KeyMod } from 'monaco-editor'
-
-export type MonacoEditorOptions = Monaco.editor.IStandaloneEditorConstructionOptions
-export type MonacoEditorLang = 'html' | 'css' | 'yaml' | 'handlebars'
-export type MonacoCodeEditor = Monaco.editor.IStandaloneCodeEditor
-
-export const MonacoEditorLang: Record<MonacoEditorLang, MonacoEditorLang> = {
-  html: 'html',
-  css: 'css',
-  yaml: 'yaml',
-  handlebars: 'handlebars'
-} as const
+<script setup lang="ts">
+import type { MonacoCodeEditor, MonacoEditorLang, MonacoEditorOptions } from './model'
 
 const formatters: Record<MonacoEditorLang, (code: string) => Promise<string>> = {
   html: formatHtml,
@@ -19,9 +7,7 @@ const formatters: Record<MonacoEditorLang, (code: string) => Promise<string>> = 
   yaml: formatYaml,
   handlebars: formatHandlebars
 }
-</script>
 
-<script setup lang="ts">
 const props = withDefaults(defineProps<{
   modelValue: string
   lang: MonacoEditorLang
@@ -59,7 +45,9 @@ const monacoLang = computed(() => {
   return props.lang
 })
 
-const handleLoad = (editor: MonacoCodeEditor) => {
+const handleLoad = async (editor: MonacoCodeEditor) => {
+  const { KeyCode, KeyMod } = await import('monaco-editor')
+
   editor.addAction({
     id: `format-${props.lang}`,
     label: `Format ${props.lang}`,

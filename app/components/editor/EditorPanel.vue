@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { TabsItem } from '@nuxt/ui'
-import type { MonacoEditorLang } from '~/components/utils/VMonacoEditor.vue'
+import type { MonacoEditorLang } from '~/components/utils/monaco'
 import type { ActiveTab } from '~/composables'
 
 const { yaml, hbs, css, head, activeTab } = useCvEditor()
