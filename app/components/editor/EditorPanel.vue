@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { TabsItem } from '@nuxt/ui'
-import type { ActiveTab } from '~/composables/useCvEditor'
 import type { MonacoEditorLang } from '~/components/utils/VMonacoEditor.vue'
+import type { ActiveTab } from '~/composables'
 
-const { yamlContent, hbsContent, cssContent, htmlHeadContent, activeTab } = useCvEditor()
+const { yaml, hbs, css, head, activeTab } = useCvEditor()
 
 interface EditorSource {
   label: string
@@ -13,10 +13,10 @@ interface EditorSource {
 }
 
 const sources = {
-  yaml: { label: 'Content', icon: 'i-lucide-file-text', lang: 'yaml', content: yamlContent },
-  hbs: { label: 'Template', icon: 'i-lucide-code', lang: 'handlebars', content: hbsContent },
-  css: { label: 'Styles', icon: 'i-lucide-palette', lang: 'css', content: cssContent },
-  head: { label: 'Head', icon: 'i-lucide-code-xml', lang: 'html', content: htmlHeadContent }
+  yaml: { label: 'Content', icon: 'i-lucide-file-text', lang: 'yaml', content: yaml },
+  hbs: { label: 'Template', icon: 'i-lucide-code', lang: 'handlebars', content: hbs },
+  css: { label: 'Styles', icon: 'i-lucide-palette', lang: 'css', content: css },
+  head: { label: 'Head', icon: 'i-lucide-code-xml', lang: 'html', content: head }
 } satisfies Record<ActiveTab, EditorSource>
 
 const tabKeys = Object.keys(sources) as ActiveTab[]

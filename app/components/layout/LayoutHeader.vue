@@ -13,13 +13,24 @@ const {
   importHbs,
   importCss,
   importHtmlHead,
+  importBundle,
   resetToDefault
 } = useCvEditor()
 
+const bundleInputRef = ref<HTMLInputElement | null>(null)
 const yamlInputRef = ref<HTMLInputElement | null>(null)
 const hbsInputRef = ref<HTMLInputElement | null>(null)
 const cssInputRef = ref<HTMLInputElement | null>(null)
 const htmlHeadInputRef = ref<HTMLInputElement | null>(null)
+
+function handleBundleFileChange(event: Event) {
+  const input = event.target as HTMLInputElement
+  const file = input.files?.[0]
+  if (file) {
+    importBundle(file)
+    input.value = ''
+  }
+}
 
 function handleYamlFileChange(event: Event) {
   const input = event.target as HTMLInputElement
@@ -58,6 +69,7 @@ function handleHbsFileChange(event: Event) {
 }
 
 const importItems: DropdownMenuItem[][] = [
+  [{ label: 'Import Bundle', icon: 'i-lucide-package', onSelect: () => bundleInputRef.value?.click() }],
   [
     { label: 'Import Content', icon: 'i-lucide-file-text', onSelect: () => yamlInputRef.value?.click() },
     { label: 'Import Template', icon: 'i-lucide-code', onSelect: () => hbsInputRef.value?.click() },
@@ -194,6 +206,13 @@ const exportItems: DropdownMenuItem[][] = [
       </UTooltip>
     </div>
 
+    <input
+      ref="bundleInputRef"
+      type="file"
+      accept=".zip,application/zip,application/x-zip-compressed"
+      class="hidden"
+      @change="handleBundleFileChange"
+    >
     <input
       ref="yamlInputRef"
       type="file"
