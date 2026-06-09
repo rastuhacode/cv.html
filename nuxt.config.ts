@@ -1,8 +1,5 @@
 import { defineNuxtConfig } from 'nuxt/config'
 
-// TODO: Unlock nuxt version after the following issue fixed:
-// https://github.com/nuxt/nuxt/issues/35253
-
 export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
