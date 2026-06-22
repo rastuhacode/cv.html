@@ -6,7 +6,7 @@ Build professional CVs using HTML (YAML + Handlebars) and CSS with a live previe
 
 ## Philosophy
 
-You can read about the motivation in my article [Stop using Word for your resume](https://rastuharem.netlify.app/posts/stop-using-word-for-your-resume).
+You can read about philosophy in my articles [Stop using Word for your resume](https://rastuharem.netlify.app/posts/stop-using-word-for-your-resume) and [Stop using HTML for you resume](https://rastuharem.netlify.app/posts/stop-using-html-for-your-resume).
 
 ## Features
 

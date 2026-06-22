@@ -21,7 +21,7 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
-  compatibilityDate: '2025-01-15',
+  compatibilityDate: '2026-06-22',
 
   vite: {
     optimizeDeps: {
