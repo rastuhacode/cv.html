@@ -11,7 +11,7 @@ const { isPreviewMarkup } = useCvEditor()
         variant="ghost"
         size="sm"
         aria-label="Toggle Preview Markup"
-        @click="isPreviewMarkup = !isPreviewMarkup"
+        @click="() => { isPreviewMarkup = !isPreviewMarkup }"
       />
     </UTooltip>
   </div>
