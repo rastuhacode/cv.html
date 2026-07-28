@@ -14,35 +14,33 @@ labels:
 contacts:
   - label: Email
     url: mailto:rasten.remizov@gmail.com
+    value: rasten.remizov@gmail.com
   - label: Website
     url: https://rastuharem.netlify.app
+    value: rastuharem.netlify.app
   - label: LinkedIn
     url: https://www.linkedin.com/in/rasten-remizov/?locale=en-US
+    value: linkedin.com/in/rasten-remizov
   - label: GitHub
     url: https://github.com/rastuhacode
+    value: github.com/rastuhacode
   - label: Telegram
     url: https://t.me/rastuharem
+    value: t.me/rastuharem
 
 profile:
   - >-
-    Frontend engineer with 5+ years of experience in web development. Specializing
-    in building responsive and performant SPA and SSR applications using modern
-    JavaScript frameworks and cloud technologies. Strong problem-solving skills
-    and a passion for clean, maintainable code, with a focus on frontend
-    architecture, performance, and developer experience. Active contributor to
-    open source.
+    I'm a Senior Frontend Engineer with 5+ years of experience building enterprise web applications, specializing in scalable SPA and SSR applications, frontend architecture, performance optimization, and developer tooling. I've designed, shipped, and maintained enterprise applications used by thousands of users. I'm also an open source contributor to projects including Reka UI, TanStack, bpmn-js, and many others.
 
 skills:
   - category: Languages
     items: JavaScript · TypeScript · HTML · CSS · SCSS
   - category: Frameworks
-    items: Vue / Nuxt · React / Next.js · Svelte · Node.js · NestJS · Express
-  - category: Cloud & Deployment
-    items: Netlify · Vercel · Firebase
+    items: Vue / Nuxt · React / Next.js · Node.js · NestJS · Express
   - category: Tools
-    items: pnpm / bun / npm · Vite · Tailwind CSS · Vitest · Playwright · Turborepo · Webpack
+    items: pnpm / bun / npm · Vite / Webpack · Tailwind CSS · Vitest · Playwright · Turborepo
   - category: Helpers
-    items: Zod · Reka UI / Headless UI · TanStack · shadcn · Changesets
+    items: Zod · Reka UI / Base UI · TanStack · shadcn · Changesets
   - category: Collaboration
     items: Jira / Confluence · Figma · Git (GitHub / GitLab)
 
@@ -50,81 +48,41 @@ experience:
   - company: ASTRA Linux
     companyUrl: https://astralinux.ru
     role: Senior Frontend Developer
+    at: at
     period: 02/2024 - Present
     highlights:
       - >-
-        Developed and maintained two products: a low-code platform for creating
-        web applications (including a technical service system for a famous
-        airline) and a collaborative CRM for internal staff with custom modules
-        for task tracking, salary management, and an internal company shop —
-        averaging ~960 daily active users.
+        Owned frontend development for two enterprise platforms supporting ~960 daily active users, including a low-code application builder and internal CRM used across multiple business departments.
       - >-
-        Designed and shipped a full-fledged frontend application builder: an
-        AST-based application model, visual editor, custom Vue-component AST
-        parser (Babel), runtime renderer, and a Node.js / NestJS bundler
-        microservice for compilation and deployment.
+        Architected and delivered an enterprise low-code application builder from scratch, including AST compiler, visual editor, runtime renderer, and deployment pipeline, enabling rapid creation of production-ready applications.
       - >-
-        Implemented integration with the backend via OpenAPI with automatic
-        generation of backend REST API types. Led the integration of Token Studio in
-        the design team, with automatic generation of CSS variables on the
-        frontend. Both solutions eliminated repetitive manual integration work,
-        freeing roughly 20 story points of team capacity per sprint.
+        Automated REST API type generation via OpenAPI and design token generation via Token Studio, eliminating repetitive integration work and recovering ~20 story points of engineering capacity every sprint.
       - >-
-        Led the integration of AI tools with working environments: MCP
-        integrations with Figma and Jira, CodeRabbit for GitLab, and agent rules.
+        Introduced AI-assisted development workflows (CodeRabbit, MCP integrations with Figma/Jira, agent rules), accelerating code reviews and developer productivity.
       - >-
-        Implemented advanced performance optimizations for the visual editor —
-        viewport culling, QuadTree-based spatial selection, and topological-sort
-        hoisting — sustaining 60 fps with ~1,100 nodes on canvas and reducing
-        selection lag from 400 ms to 100 ms.
+        Increased visual editor rendering performance by implementing viewport culling, QuadTree spatial indexing, and optimized rendering algorithms, sustaining 60 FPS across 1,100+ canvas nodes while reducing interaction latency 75% (400 ms → 100 ms).
       - >-
-        Built and maintained a monorepo for the platform's frontend tooling using
-        pnpm, Turborepo, TypeScript, Vite, and Changesets, enabling scalable
-        development and independent package versioning.
+        Built and maintained a monorepo for the platform's frontend tooling using pnpm, Turborepo, TypeScript, Vite, and Changesets, enabling scalable development and independent package versioning.
       - >-
-        Designed, developed, and maintained the company's UI kit of 20+
-        components from Figma designs using Reka UI, shadcn-vue, and Tailwind.
-        Led the CRM platform redesign, including migration from Naive UI to the
-        UI kit.
+        Built and maintained a company-wide design system with 20+ reusable components using Reka UI, shadcn-vue, and Tailwind CSS, ensuring responsive, accessible (WCAG 2.1 AA) interfaces.
       - >-
-        Led the migration from a legacy React codebase to Nuxt, improving
-        page-load performance, SEO, and long-term maintainability while
-        streamlining the developer experience.
-      - >-
-        Led an architectural refactoring to Feature-Sliced Design (FSD),
-        including removal of unused dependencies and major-version npm upgrades
-        — improving long-term maintainability and security.
-      - Mentored junior developers and conducted code reviews to maintain code quality.
-      - >-
-        Day-to-day frontend duties: forms via TanStack Form and Zod, REST
-        integrations, WebSockets, and more.
+        Completed migration from a legacy React codebase to Nuxt, improving page-load performance, SEO, and long-term maintainability while streamlining the developer experience.
 
   - company: HUAWEI
     companyUrl: https://www.huawei.com/en
-    role: Middle Frontend Developer
+    role: Frontend Developer
+    at: at
     period: 11/2020 - 02/2024
     highlights:
-      - Developed and maintained a cloud-based CAD/CAE platform for engineering workflows.
+      - Built and enhanced frontend features for a cloud-based CAD/CAE engineering platform serving enterprise engineering workflows.
       - >-
-        Led the migration of a large production frontend from Vue CLI (Webpack) to
-        Vite, including custom plugins and configuration work — significantly
-        improving developer experience and cutting cold-start dev-server time from
-        ~2 minutes to seconds (up to 60× faster).
+        Owned migration from Vue CLI/Webpack to Vite, reducing local development startup time from ~2 minutes to a few seconds (up to 60× faster) and dramatically improving developer productivity.
       - >-
-        Developed complex, high-performance UI components with Vue 3, TypeScript,
-        Pinia, and SCSS — including virtual scrolling, dynamic widgets from JSON
-        schemas, and role-based authorization.
+        Developed complex, high-performance UI components with Vue 3, TypeScript, Pinia, and SCSS — including virtual scrolling, dynamic widgets from JSON schemas, and role-based authorization.
       - >-
-        Designed an abstraction layer over Playwright enabling engineers
-        (including non-frontend) to author E2E tests and create interactive
-        presentations.
+        Added Playwright (E2E) + Vitest (unit) coverage with nightly CI runs, reducing regressions by ~28%. Designed a Playwright abstraction so non-frontend engineers could author E2E tests and interactive presentations.
       - >-
-        Built automated testing coverage with Playwright (E2E) and Vitest (unit),
-        with nightly auto-runs — reducing regressions by 28%.
-      - >-
-        Collaborated cross-functionally and internationally, discussing
-        requirements and reviewing code in English with distributed teams
-        (including Chinese colleagues).
+        Collaborated in English with distributed international teams (including China) on requirements and code review.
 
 education:
   - institution: Lobachevsky State University of Nizhny Novgorod
@@ -132,10 +90,6 @@ education:
     degree: Bachelor of Applied Computer Science
     period: 2019 - 2023
     highlights:
-      - "GPA: 3.34/4.0"
-      - >-
-        Relevant coursework: Data Structures, Algorithms, Database Systems, Web
-        Development
       - >-
         Senior project: C# application solving the Traveling Salesperson Problem
         with an Evolutionary Genetic Algorithm; thesis comparing this solution
