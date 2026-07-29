@@ -59,11 +59,11 @@ experience:
     period: 02/2024 - Present
     highlights:
       - >-
-        Frontend tech lead for two enterprise platforms — a low-code application builder and an internal CRM — used daily across 4 business departments. Set frontend architecture, owned code review, and mentored 4 engineers.
+        Core frontend developer on two enterprise platforms — a low-code application builder and an internal CRM — used daily across 4 business departments. Drove frontend architecture decisions, owned code review, and mentored 4 engineers.
       - >-
-        Architected and shipped an enterprise low-code application builder from scratch (AST compiler, visual editor, runtime renderer, deployment pipeline), enabling 3 non-frontend teams to ship 7 fullstack applications without engineers involvement.
+        Architected and shipped an enterprise low-code application builder from scratch (AST compiler, visual editor, runtime renderer, deployment pipeline), enabling 3 non-frontend teams to ship 7 fullstack applications without engineering involvement.
       - >-
-        Authored the frontend architecture RFCs adopted as standard across 3 teams, covering design system API boundaries, monorepo package structure, and the React-to-Nuxt migration plan.
+        Authored the frontend architecture RFCs adopted as standard across 3 teams, covering design system API boundaries and monorepo package structure.
       - >-
         Optimized the visual editor's rendering pipeline with viewport culling and QuadTree spatial indexing, sustaining 60 FPS at 1,100+ canvas nodes and cutting interaction latency 75% (400 ms → 100 ms).
       - >-
