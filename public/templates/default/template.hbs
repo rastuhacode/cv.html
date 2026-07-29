@@ -138,15 +138,15 @@
       >
         {{#if cv.labels.skills}}{{cv.labels.skills}}{{else}}Skills{{/if}}
       </h2>
-      <ul class="border-l-[3px] border-black">
+      <ul class="border-l-[3px] border-b-[3px] [border-style:solid_dashed] border-black">
         {{#each cv.skills}}
-        <li class="flex items-baseline gap-2 px-2.5 py-1 leading-snug">
+        <li class="flex flex-col gap-1 px-2.5 py-1 leading-snug">
           <span class="shrink-0 font-black uppercase">
             <span
               class="text-[8pt] leading-none bg-yellow-300 border-2 border-black text-black px-1.5 py-0.5"
-            >{{this.category}}</span><span class="text-[8pt] text-white">:</span>
+            >{{this.category}}<span class="text-[8pt] text-yellow-300">:</span></span>
           </span>
-          <span class="min-w-0">{{this.items}}</span>
+          <span>{{this.items}}</span>
         </li>
         {{/each}}
       </ul>
