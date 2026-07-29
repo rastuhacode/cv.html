@@ -1,4 +1,4 @@
-import * as yamlJs from 'js-yaml'
+import { load as loadYaml } from 'js-yaml'
 import Handlebars from 'handlebars'
 
 import type { ActiveTab, EditorRefs } from './model'
@@ -23,7 +23,7 @@ export function useCvEditor() {
 
   const compiledHtml = computed(() => {
     const [html, err] = trycatch(() => {
-      const cvData = yamlJs.load(yaml.value) || {}
+      const cvData = loadYaml(yaml.value) || {}
       const template = Handlebars.compile(hbs.value)
       return template({ cv: cvData })
     })
